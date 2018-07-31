@@ -214,7 +214,7 @@ namespace DeepLearnUI
 
                 DrawActivationMap(layer, map);
 
-                if (cnn.Layers[layer].Type == LayerTypes.Convolution)
+                if (layer >= 0 && layer < cnn.Layers.Count && cnn.Layers[layer].Type == LayerTypes.Convolution)
                 {
                     var i = FeatureMapI.Value;
                     var j = FeatureMapJ.Value;
@@ -312,7 +312,7 @@ namespace DeepLearnUI
 
                 DrawActivationMap(layer, map);
 
-                if (cnn.Layers[layer].Type != LayerTypes.Convolution)
+                if (layer >= 0 && layer < cnn.Layers.Count && cnn.Layers[layer].Type != LayerTypes.Convolution)
                 {
                     FeatureMapPanel.Hide();
                     FeatureMapJ.Enabled = false;
@@ -353,12 +353,15 @@ namespace DeepLearnUI
                 var layer = NetworkLayers.SelectedIndex;
                 var map = ActivationMapsScroll.Value;
 
-                ActivationMapsTextBox.Text = map.ToString("D", ManagedMatrix.ci);
+                if (layer >= 0 && layer < cnn.Layers.Count)
+                {
+                    ActivationMapsTextBox.Text = map.ToString("D", ManagedMatrix.ci);
 
-                ActivationX.Text = cnn.Layers[layer].Activation.x.ToString("D", ManagedMatrix.ci);
-                ActivationY.Text = cnn.Layers[layer].Activation.y.ToString("D", ManagedMatrix.ci);
+                    ActivationX.Text = cnn.Layers[layer].Activation.x.ToString("D", ManagedMatrix.ci);
+                    ActivationY.Text = cnn.Layers[layer].Activation.y.ToString("D", ManagedMatrix.ci);
 
-                DrawActivationMap(layer, map);
+                    DrawActivationMap(layer, map);
+                }
             }
         }
 
@@ -368,7 +371,7 @@ namespace DeepLearnUI
             {
                 var layer = NetworkLayers.SelectedIndex;
 
-                if (cnn.Layers[layer].Type == LayerTypes.Convolution)
+                if (layer >= 0 && layer < cnn.Layers.Count && cnn.Layers[layer].Type == LayerTypes.Convolution)
                 {
                     var i = FeatureMapI.Value;
                     var j = FeatureMapJ.Value;
@@ -386,7 +389,7 @@ namespace DeepLearnUI
             {
                 var layer = NetworkLayers.SelectedIndex;
 
-                if (cnn.Layers[layer].Type == LayerTypes.Convolution)
+                if (layer >= 0 && layer < cnn.Layers.Count && cnn.Layers[layer].Type == LayerTypes.Convolution)
                 {
                     var i = FeatureMapI.Value;
                     var j = FeatureMapJ.Value;
