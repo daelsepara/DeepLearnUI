@@ -4,9 +4,9 @@ UI For Visualizing Convolutional Neural Network Operations
 
 ## Activations
 
-1. Input layer
-2. Convolutional layer
+### Input layer
+### Convolutional layer
 - Feature maps
-3. Subsampling / Pooling layer
+### Subsampling / Pooling layer
 
 ## Classification scores
