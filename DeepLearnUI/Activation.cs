@@ -10,7 +10,7 @@ namespace DeepLearnUI
     {
         public static Bitmap Get(ManagedCNN cnn, int layer, int map)
         {
-            if (layer >=0 && layer < cnn.Layers.Count && map >= 0 && map < cnn.Layers[layer].Activation.i)
+            if (layer >= 0 && layer < cnn.Layers.Count && map >= 0 && map < cnn.Layers[layer].Activation.i)
             {
                 var Activation = new ManagedArray(cnn.Layers[layer].Activation.x, cnn.Layers[layer].Activation.y, cnn.Layers[layer].Activation.z);
                 var Transposed = new ManagedArray(Activation);
@@ -18,7 +18,7 @@ namespace DeepLearnUI
 
                 ManagedOps.Copy4D2D(Activation, cnn.Layers[layer].Activation, 0, map);
                 ManagedMatrix.Transpose(Transposed, Activation);
-                
+
                 // Get normalization values
                 double min = 1.0;
                 double max = 0.0;
