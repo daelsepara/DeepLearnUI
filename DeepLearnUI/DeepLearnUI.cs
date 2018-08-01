@@ -129,6 +129,19 @@ namespace DeepLearnUI
             CleanUpUI();
         }
 
+        private void RenderBitmap(PictureBox pb, Bitmap bm)
+        {
+            if (pb.Image != null)
+                pb.Image.Dispose();
+
+            if (bm != null)
+            {
+                var stretched = Classify.Resize(bm, pb.Width, pb.Height);
+                pb.Image = stretched.Clone(new Rectangle(0, 0, stretched.Width, stretched.Height), System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+                stretched.Dispose();
+            }
+        }
+
         private void Draw(Bitmap bitmap, int x, int y, bool erase = false)
         {
             SolidBrush redBrush = new SolidBrush(Color.Red);
@@ -157,13 +170,7 @@ namespace DeepLearnUI
 
         public void CopyBitmap(Bitmap bitmap)
         {
-            if (DigitBox.Image != null)
-                DigitBox.Image.Dispose();
-
-            if (bitmap != null)
-            {
-                DigitBox.Image = bitmap.Clone(new Rectangle(0, 0, bitmap.Width, bitmap.Height), System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            }
+            RenderBitmap(DigitBox, bitmap);
         }
 
         public void DrawActivationMap(int layer, int map)
@@ -172,14 +179,9 @@ namespace DeepLearnUI
             {
                 var bitmap = Activation.Get(cnn, layer, map);
 
-                if (ActivationMap.Image != null)
-                    ActivationMap.Image.Dispose();
+                RenderBitmap(ActivationMap, bitmap);
 
-                if (bitmap != null)
-                {
-                    ActivationMap.Image = bitmap.Clone(new Rectangle(0, 0, bitmap.Width, bitmap.Height), System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-                    bitmap.Dispose();
-                }
+                bitmap.Dispose();
             }
         }
 
@@ -189,15 +191,28 @@ namespace DeepLearnUI
             {
                 var bitmap = Feature.Get(cnn, layer, i, j);
 
-                if (FeatureMap.Image != null)
-                    FeatureMap.Image.Dispose();
+                RenderBitmap(FeatureMap, bitmap);
 
-                if (bitmap != null)
-                {
-                    FeatureMap.Image = bitmap.Clone(new Rectangle(0, 0, bitmap.Width, bitmap.Height), System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-                    bitmap.Dispose();
-                }
+                bitmap.Dispose();
             }
+        }
+
+        private void DrawFullyConnectedLayers()
+        {
+            var output = FullyConnected.Get(cnn.Output);
+            var featurevector = FullyConnected.Get(cnn.FeatureVector);
+            var weights = FullyConnected.Get(cnn.Weights, false);
+
+            if (IsActivated)
+            {
+                RenderBitmap(Output, output);
+                RenderBitmap(FeatureVector, featurevector);
+                RenderBitmap(Weights, weights);
+            }
+
+            output.Dispose();
+            featurevector.Dispose();
+            weights.Dispose();
         }
 
         private void ButtonClassify_Click(object sender, EventArgs e)
@@ -229,6 +244,8 @@ namespace DeepLearnUI
             }
 
             IsActivated = true;
+
+            DrawFullyConnectedLayers();
         }
 
         private void DigitBox_MouseMove(object sender, MouseEventArgs e)

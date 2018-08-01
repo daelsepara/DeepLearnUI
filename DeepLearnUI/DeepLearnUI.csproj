@@ -62,6 +62,7 @@
       <DependentUpon>DeepLearnUI.cs</DependentUpon>
     </Compile>
     <Compile Include="Feature.cs" />
+    <Compile Include="FullyConnected.cs" />
     <Compile Include="LayerTypes.cs" />
     <Compile Include="ManagedArray.cs" />
     <Compile Include="ManagedCNN.cs" />

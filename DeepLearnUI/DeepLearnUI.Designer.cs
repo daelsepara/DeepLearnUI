@@ -61,6 +61,19 @@
             this.ButtonClassify = new System.Windows.Forms.Button();
             this.DigitBox = new System.Windows.Forms.PictureBox();
             this.PageNetwork = new System.Windows.Forms.TabPage();
+            this.FeatureMapPanel = new System.Windows.Forms.Panel();
+            this.FeatureMapJText = new System.Windows.Forms.TextBox();
+            this.FeatureMapJLabel = new System.Windows.Forms.Label();
+            this.FeatureMapIText = new System.Windows.Forms.TextBox();
+            this.FeatureMapILabel = new System.Windows.Forms.Label();
+            this.FeatureMapY = new System.Windows.Forms.TextBox();
+            this.FeatureMapYLabel = new System.Windows.Forms.Label();
+            this.FeatureMapX = new System.Windows.Forms.TextBox();
+            this.FeatureMapXLabel = new System.Windows.Forms.Label();
+            this.FeatureMapJ = new System.Windows.Forms.VScrollBar();
+            this.FeatureMapI = new System.Windows.Forms.HScrollBar();
+            this.FeatureMap = new System.Windows.Forms.PictureBox();
+            this.FeatureMapLabel = new System.Windows.Forms.Label();
             this.ActivationY = new System.Windows.Forms.TextBox();
             this.ActivationYLabel = new System.Windows.Forms.Label();
             this.ActivationX = new System.Windows.Forms.TextBox();
@@ -71,26 +84,22 @@
             this.ActivationMapLabel = new System.Windows.Forms.Label();
             this.NetworkLayersLabel = new System.Windows.Forms.Label();
             this.NetworkLayers = new System.Windows.Forms.ListBox();
-            this.FeatureMapPanel = new System.Windows.Forms.Panel();
-            this.FeatureMapLabel = new System.Windows.Forms.Label();
-            this.FeatureMap = new System.Windows.Forms.PictureBox();
-            this.FeatureMapI = new System.Windows.Forms.HScrollBar();
-            this.FeatureMapJ = new System.Windows.Forms.VScrollBar();
-            this.FeatureMapY = new System.Windows.Forms.TextBox();
-            this.FeatureMapYLabel = new System.Windows.Forms.Label();
-            this.FeatureMapX = new System.Windows.Forms.TextBox();
-            this.FeatureMapXLabel = new System.Windows.Forms.Label();
-            this.FeatureMapJText = new System.Windows.Forms.TextBox();
-            this.FeatureMapJLabel = new System.Windows.Forms.Label();
-            this.FeatureMapIText = new System.Windows.Forms.TextBox();
-            this.FeatureMapILabel = new System.Windows.Forms.Label();
+            this.FeatureVector = new System.Windows.Forms.PictureBox();
+            this.FeatureVectorLabel = new System.Windows.Forms.Label();
+            this.Output = new System.Windows.Forms.PictureBox();
+            this.OutputLabel = new System.Windows.Forms.Label();
+            this.Weights = new System.Windows.Forms.PictureBox();
+            this.WeightsLabel = new System.Windows.Forms.Label();
             this.DeepLearnPages.SuspendLayout();
             this.PageClassify.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DigitBox)).BeginInit();
             this.PageNetwork.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ActivationMap)).BeginInit();
             this.FeatureMapPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FeatureMap)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActivationMap)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FeatureVector)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Output)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Weights)).BeginInit();
             this.SuspendLayout();
             // 
             // DeepLearnPages
@@ -416,6 +425,12 @@
             // 
             this.PageNetwork.BackColor = System.Drawing.Color.Gainsboro;
             this.PageNetwork.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PageNetwork.Controls.Add(this.Weights);
+            this.PageNetwork.Controls.Add(this.WeightsLabel);
+            this.PageNetwork.Controls.Add(this.Output);
+            this.PageNetwork.Controls.Add(this.OutputLabel);
+            this.PageNetwork.Controls.Add(this.FeatureVector);
+            this.PageNetwork.Controls.Add(this.FeatureVectorLabel);
             this.PageNetwork.Controls.Add(this.FeatureMapPanel);
             this.PageNetwork.Controls.Add(this.ActivationY);
             this.PageNetwork.Controls.Add(this.ActivationYLabel);
@@ -433,6 +448,142 @@
             this.PageNetwork.Size = new System.Drawing.Size(632, 454);
             this.PageNetwork.TabIndex = 1;
             this.PageNetwork.Text = "Network";
+            // 
+            // FeatureMapPanel
+            // 
+            this.FeatureMapPanel.Controls.Add(this.FeatureMapJText);
+            this.FeatureMapPanel.Controls.Add(this.FeatureMapJLabel);
+            this.FeatureMapPanel.Controls.Add(this.FeatureMapIText);
+            this.FeatureMapPanel.Controls.Add(this.FeatureMapILabel);
+            this.FeatureMapPanel.Controls.Add(this.FeatureMapY);
+            this.FeatureMapPanel.Controls.Add(this.FeatureMapYLabel);
+            this.FeatureMapPanel.Controls.Add(this.FeatureMapX);
+            this.FeatureMapPanel.Controls.Add(this.FeatureMapXLabel);
+            this.FeatureMapPanel.Controls.Add(this.FeatureMapJ);
+            this.FeatureMapPanel.Controls.Add(this.FeatureMapI);
+            this.FeatureMapPanel.Controls.Add(this.FeatureMap);
+            this.FeatureMapPanel.Controls.Add(this.FeatureMapLabel);
+            this.FeatureMapPanel.Location = new System.Drawing.Point(195, 155);
+            this.FeatureMapPanel.Name = "FeatureMapPanel";
+            this.FeatureMapPanel.Size = new System.Drawing.Size(256, 192);
+            this.FeatureMapPanel.TabIndex = 33;
+            // 
+            // FeatureMapJText
+            // 
+            this.FeatureMapJText.BackColor = System.Drawing.Color.White;
+            this.FeatureMapJText.Location = new System.Drawing.Point(211, 63);
+            this.FeatureMapJText.Name = "FeatureMapJText";
+            this.FeatureMapJText.ReadOnly = true;
+            this.FeatureMapJText.Size = new System.Drawing.Size(33, 20);
+            this.FeatureMapJText.TabIndex = 40;
+            // 
+            // FeatureMapJLabel
+            // 
+            this.FeatureMapJLabel.AutoSize = true;
+            this.FeatureMapJLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FeatureMapJLabel.Location = new System.Drawing.Point(211, 47);
+            this.FeatureMapJLabel.Name = "FeatureMapJLabel";
+            this.FeatureMapJLabel.Size = new System.Drawing.Size(13, 13);
+            this.FeatureMapJLabel.TabIndex = 39;
+            this.FeatureMapJLabel.Text = "J";
+            // 
+            // FeatureMapIText
+            // 
+            this.FeatureMapIText.BackColor = System.Drawing.Color.White;
+            this.FeatureMapIText.Location = new System.Drawing.Point(172, 63);
+            this.FeatureMapIText.Name = "FeatureMapIText";
+            this.FeatureMapIText.ReadOnly = true;
+            this.FeatureMapIText.Size = new System.Drawing.Size(33, 20);
+            this.FeatureMapIText.TabIndex = 38;
+            // 
+            // FeatureMapILabel
+            // 
+            this.FeatureMapILabel.AutoSize = true;
+            this.FeatureMapILabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FeatureMapILabel.Location = new System.Drawing.Point(172, 47);
+            this.FeatureMapILabel.Name = "FeatureMapILabel";
+            this.FeatureMapILabel.Size = new System.Drawing.Size(11, 13);
+            this.FeatureMapILabel.TabIndex = 37;
+            this.FeatureMapILabel.Text = "I";
+            // 
+            // FeatureMapY
+            // 
+            this.FeatureMapY.BackColor = System.Drawing.Color.White;
+            this.FeatureMapY.Location = new System.Drawing.Point(211, 102);
+            this.FeatureMapY.Name = "FeatureMapY";
+            this.FeatureMapY.ReadOnly = true;
+            this.FeatureMapY.Size = new System.Drawing.Size(33, 20);
+            this.FeatureMapY.TabIndex = 36;
+            // 
+            // FeatureMapYLabel
+            // 
+            this.FeatureMapYLabel.AutoSize = true;
+            this.FeatureMapYLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FeatureMapYLabel.Location = new System.Drawing.Point(211, 86);
+            this.FeatureMapYLabel.Name = "FeatureMapYLabel";
+            this.FeatureMapYLabel.Size = new System.Drawing.Size(15, 13);
+            this.FeatureMapYLabel.TabIndex = 35;
+            this.FeatureMapYLabel.Text = "Y";
+            // 
+            // FeatureMapX
+            // 
+            this.FeatureMapX.BackColor = System.Drawing.Color.White;
+            this.FeatureMapX.Location = new System.Drawing.Point(172, 102);
+            this.FeatureMapX.Name = "FeatureMapX";
+            this.FeatureMapX.ReadOnly = true;
+            this.FeatureMapX.Size = new System.Drawing.Size(33, 20);
+            this.FeatureMapX.TabIndex = 34;
+            // 
+            // FeatureMapXLabel
+            // 
+            this.FeatureMapXLabel.AutoSize = true;
+            this.FeatureMapXLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FeatureMapXLabel.Location = new System.Drawing.Point(172, 86);
+            this.FeatureMapXLabel.Name = "FeatureMapXLabel";
+            this.FeatureMapXLabel.Size = new System.Drawing.Size(15, 13);
+            this.FeatureMapXLabel.TabIndex = 33;
+            this.FeatureMapXLabel.Text = "X";
+            // 
+            // FeatureMapJ
+            // 
+            this.FeatureMapJ.Enabled = false;
+            this.FeatureMapJ.LargeChange = 1;
+            this.FeatureMapJ.Location = new System.Drawing.Point(10, 25);
+            this.FeatureMapJ.Name = "FeatureMapJ";
+            this.FeatureMapJ.Size = new System.Drawing.Size(25, 128);
+            this.FeatureMapJ.TabIndex = 29;
+            this.FeatureMapJ.ValueChanged += new System.EventHandler(this.FeatureMapJ_ValueChanged);
+            // 
+            // FeatureMapI
+            // 
+            this.FeatureMapI.Enabled = false;
+            this.FeatureMapI.LargeChange = 1;
+            this.FeatureMapI.Location = new System.Drawing.Point(38, 156);
+            this.FeatureMapI.Name = "FeatureMapI";
+            this.FeatureMapI.Size = new System.Drawing.Size(128, 25);
+            this.FeatureMapI.TabIndex = 28;
+            this.FeatureMapI.ValueChanged += new System.EventHandler(this.FeatureMapI_ValueChanged);
+            // 
+            // FeatureMap
+            // 
+            this.FeatureMap.BackColor = System.Drawing.Color.Black;
+            this.FeatureMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.FeatureMap.Location = new System.Drawing.Point(38, 25);
+            this.FeatureMap.Name = "FeatureMap";
+            this.FeatureMap.Size = new System.Drawing.Size(128, 128);
+            this.FeatureMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.FeatureMap.TabIndex = 27;
+            this.FeatureMap.TabStop = false;
+            // 
+            // FeatureMapLabel
+            // 
+            this.FeatureMapLabel.AutoSize = true;
+            this.FeatureMapLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FeatureMapLabel.Location = new System.Drawing.Point(35, 7);
+            this.FeatureMapLabel.Name = "FeatureMapLabel";
+            this.FeatureMapLabel.Size = new System.Drawing.Size(78, 13);
+            this.FeatureMapLabel.TabIndex = 26;
+            this.FeatureMapLabel.Text = "Feature Map";
             // 
             // ActivationY
             // 
@@ -535,141 +686,65 @@
             this.NetworkLayers.TabIndex = 0;
             this.NetworkLayers.SelectedIndexChanged += new System.EventHandler(this.NetworkLayers_SelectedIndexChanged);
             // 
-            // FeatureMapPanel
+            // FeatureVector
             // 
-            this.FeatureMapPanel.Controls.Add(this.FeatureMapJText);
-            this.FeatureMapPanel.Controls.Add(this.FeatureMapJLabel);
-            this.FeatureMapPanel.Controls.Add(this.FeatureMapIText);
-            this.FeatureMapPanel.Controls.Add(this.FeatureMapILabel);
-            this.FeatureMapPanel.Controls.Add(this.FeatureMapY);
-            this.FeatureMapPanel.Controls.Add(this.FeatureMapYLabel);
-            this.FeatureMapPanel.Controls.Add(this.FeatureMapX);
-            this.FeatureMapPanel.Controls.Add(this.FeatureMapXLabel);
-            this.FeatureMapPanel.Controls.Add(this.FeatureMapJ);
-            this.FeatureMapPanel.Controls.Add(this.FeatureMapI);
-            this.FeatureMapPanel.Controls.Add(this.FeatureMap);
-            this.FeatureMapPanel.Controls.Add(this.FeatureMapLabel);
-            this.FeatureMapPanel.Location = new System.Drawing.Point(195, 155);
-            this.FeatureMapPanel.Name = "FeatureMapPanel";
-            this.FeatureMapPanel.Size = new System.Drawing.Size(256, 192);
-            this.FeatureMapPanel.TabIndex = 33;
+            this.FeatureVector.BackColor = System.Drawing.Color.Black;
+            this.FeatureVector.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.FeatureVector.Location = new System.Drawing.Point(18, 369);
+            this.FeatureVector.Name = "FeatureVector";
+            this.FeatureVector.Size = new System.Drawing.Size(166, 55);
+            this.FeatureVector.TabIndex = 35;
+            this.FeatureVector.TabStop = false;
             // 
-            // FeatureMapLabel
+            // FeatureVectorLabel
             // 
-            this.FeatureMapLabel.AutoSize = true;
-            this.FeatureMapLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FeatureMapLabel.Location = new System.Drawing.Point(35, 7);
-            this.FeatureMapLabel.Name = "FeatureMapLabel";
-            this.FeatureMapLabel.Size = new System.Drawing.Size(78, 13);
-            this.FeatureMapLabel.TabIndex = 26;
-            this.FeatureMapLabel.Text = "Feature Map";
+            this.FeatureVectorLabel.AutoSize = true;
+            this.FeatureVectorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FeatureVectorLabel.Location = new System.Drawing.Point(16, 353);
+            this.FeatureVectorLabel.Name = "FeatureVectorLabel";
+            this.FeatureVectorLabel.Size = new System.Drawing.Size(91, 13);
+            this.FeatureVectorLabel.TabIndex = 34;
+            this.FeatureVectorLabel.Text = "Feature Vector";
             // 
-            // FeatureMap
+            // Output
             // 
-            this.FeatureMap.BackColor = System.Drawing.Color.Black;
-            this.FeatureMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.FeatureMap.Location = new System.Drawing.Point(38, 25);
-            this.FeatureMap.Name = "FeatureMap";
-            this.FeatureMap.Size = new System.Drawing.Size(128, 128);
-            this.FeatureMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.FeatureMap.TabIndex = 27;
-            this.FeatureMap.TabStop = false;
+            this.Output.BackColor = System.Drawing.Color.Black;
+            this.Output.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Output.Location = new System.Drawing.Point(285, 31);
+            this.Output.Name = "Output";
+            this.Output.Size = new System.Drawing.Size(166, 55);
+            this.Output.TabIndex = 37;
+            this.Output.TabStop = false;
             // 
-            // FeatureMapI
+            // OutputLabel
             // 
-            this.FeatureMapI.Enabled = false;
-            this.FeatureMapI.LargeChange = 1;
-            this.FeatureMapI.Location = new System.Drawing.Point(38, 156);
-            this.FeatureMapI.Name = "FeatureMapI";
-            this.FeatureMapI.Size = new System.Drawing.Size(128, 25);
-            this.FeatureMapI.TabIndex = 28;
-            this.FeatureMapI.ValueChanged += new System.EventHandler(this.FeatureMapI_ValueChanged);
+            this.OutputLabel.AutoSize = true;
+            this.OutputLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.OutputLabel.Location = new System.Drawing.Point(283, 15);
+            this.OutputLabel.Name = "OutputLabel";
+            this.OutputLabel.Size = new System.Drawing.Size(45, 13);
+            this.OutputLabel.TabIndex = 36;
+            this.OutputLabel.Text = "Output";
             // 
-            // FeatureMapJ
+            // Weights
             // 
-            this.FeatureMapJ.Enabled = false;
-            this.FeatureMapJ.LargeChange = 1;
-            this.FeatureMapJ.Location = new System.Drawing.Point(10, 25);
-            this.FeatureMapJ.Name = "FeatureMapJ";
-            this.FeatureMapJ.Size = new System.Drawing.Size(25, 128);
-            this.FeatureMapJ.TabIndex = 29;
-            this.FeatureMapJ.ValueChanged += new System.EventHandler(this.FeatureMapJ_ValueChanged);
+            this.Weights.BackColor = System.Drawing.Color.Black;
+            this.Weights.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Weights.Location = new System.Drawing.Point(195, 369);
+            this.Weights.Name = "Weights";
+            this.Weights.Size = new System.Drawing.Size(166, 55);
+            this.Weights.TabIndex = 39;
+            this.Weights.TabStop = false;
             // 
-            // FeatureMapY
+            // WeightsLabel
             // 
-            this.FeatureMapY.BackColor = System.Drawing.Color.White;
-            this.FeatureMapY.Location = new System.Drawing.Point(211, 102);
-            this.FeatureMapY.Name = "FeatureMapY";
-            this.FeatureMapY.ReadOnly = true;
-            this.FeatureMapY.Size = new System.Drawing.Size(33, 20);
-            this.FeatureMapY.TabIndex = 36;
-            // 
-            // FeatureMapYLabel
-            // 
-            this.FeatureMapYLabel.AutoSize = true;
-            this.FeatureMapYLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FeatureMapYLabel.Location = new System.Drawing.Point(211, 86);
-            this.FeatureMapYLabel.Name = "FeatureMapYLabel";
-            this.FeatureMapYLabel.Size = new System.Drawing.Size(15, 13);
-            this.FeatureMapYLabel.TabIndex = 35;
-            this.FeatureMapYLabel.Text = "Y";
-            // 
-            // FeatureMapX
-            // 
-            this.FeatureMapX.BackColor = System.Drawing.Color.White;
-            this.FeatureMapX.Location = new System.Drawing.Point(172, 102);
-            this.FeatureMapX.Name = "FeatureMapX";
-            this.FeatureMapX.ReadOnly = true;
-            this.FeatureMapX.Size = new System.Drawing.Size(33, 20);
-            this.FeatureMapX.TabIndex = 34;
-            // 
-            // FeatureMapXLabel
-            // 
-            this.FeatureMapXLabel.AutoSize = true;
-            this.FeatureMapXLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FeatureMapXLabel.Location = new System.Drawing.Point(172, 86);
-            this.FeatureMapXLabel.Name = "FeatureMapXLabel";
-            this.FeatureMapXLabel.Size = new System.Drawing.Size(15, 13);
-            this.FeatureMapXLabel.TabIndex = 33;
-            this.FeatureMapXLabel.Text = "X";
-            // 
-            // FeatureMapJText
-            // 
-            this.FeatureMapJText.BackColor = System.Drawing.Color.White;
-            this.FeatureMapJText.Location = new System.Drawing.Point(211, 63);
-            this.FeatureMapJText.Name = "FeatureMapJText";
-            this.FeatureMapJText.ReadOnly = true;
-            this.FeatureMapJText.Size = new System.Drawing.Size(33, 20);
-            this.FeatureMapJText.TabIndex = 40;
-            // 
-            // FeatureMapJLabel
-            // 
-            this.FeatureMapJLabel.AutoSize = true;
-            this.FeatureMapJLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FeatureMapJLabel.Location = new System.Drawing.Point(211, 47);
-            this.FeatureMapJLabel.Name = "FeatureMapJLabel";
-            this.FeatureMapJLabel.Size = new System.Drawing.Size(13, 13);
-            this.FeatureMapJLabel.TabIndex = 39;
-            this.FeatureMapJLabel.Text = "J";
-            // 
-            // FeatureMapIText
-            // 
-            this.FeatureMapIText.BackColor = System.Drawing.Color.White;
-            this.FeatureMapIText.Location = new System.Drawing.Point(172, 63);
-            this.FeatureMapIText.Name = "FeatureMapIText";
-            this.FeatureMapIText.ReadOnly = true;
-            this.FeatureMapIText.Size = new System.Drawing.Size(33, 20);
-            this.FeatureMapIText.TabIndex = 38;
-            // 
-            // FeatureMapILabel
-            // 
-            this.FeatureMapILabel.AutoSize = true;
-            this.FeatureMapILabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FeatureMapILabel.Location = new System.Drawing.Point(172, 47);
-            this.FeatureMapILabel.Name = "FeatureMapILabel";
-            this.FeatureMapILabel.Size = new System.Drawing.Size(11, 13);
-            this.FeatureMapILabel.TabIndex = 37;
-            this.FeatureMapILabel.Text = "I";
+            this.WeightsLabel.AutoSize = true;
+            this.WeightsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.WeightsLabel.Location = new System.Drawing.Point(193, 353);
+            this.WeightsLabel.Name = "WeightsLabel";
+            this.WeightsLabel.Size = new System.Drawing.Size(53, 13);
+            this.WeightsLabel.TabIndex = 38;
+            this.WeightsLabel.Text = "Weights";
             // 
             // DeepLearnUI
             // 
@@ -690,10 +765,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.DigitBox)).EndInit();
             this.PageNetwork.ResumeLayout(false);
             this.PageNetwork.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ActivationMap)).EndInit();
             this.FeatureMapPanel.ResumeLayout(false);
             this.FeatureMapPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FeatureMap)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ActivationMap)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FeatureVector)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Output)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Weights)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -755,6 +833,12 @@
         private System.Windows.Forms.Label FeatureMapJLabel;
         private System.Windows.Forms.TextBox FeatureMapIText;
         private System.Windows.Forms.Label FeatureMapILabel;
+        private System.Windows.Forms.PictureBox Output;
+        private System.Windows.Forms.Label OutputLabel;
+        private System.Windows.Forms.PictureBox FeatureVector;
+        private System.Windows.Forms.Label FeatureVectorLabel;
+        private System.Windows.Forms.PictureBox Weights;
+        private System.Windows.Forms.Label WeightsLabel;
     }
 }
 
