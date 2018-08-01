@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activation.cs" />
+    <Compile Include="Bias.cs" />
     <Compile Include="Classify.cs" />
     <Compile Include="ConvolutionalNeuralNetworkOptions.cs" />
     <Compile Include="ConvolutionShape.cs" />

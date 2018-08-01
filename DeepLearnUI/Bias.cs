@@ -6,45 +6,49 @@ using System.Runtime.InteropServices;
 
 namespace DeepLearnUI
 {
-    class FullyConnected
+    class Bias
     {
-        public static Bitmap Get(ManagedArray layer, bool transpose = true)
+        public static Bitmap Get(ManagedCNN cnn, int layer, bool transpose = true)
         {
-            Console.WriteLine("Layer dimensions: {0} {1}", layer.x, layer.y);
-
-            if (transpose)
+            if (layer >= 0 && layer < cnn.Layers.Count && cnn.Layers[layer].Type == LayerTypes.Convolution)
             {
-                var Transposed = new ManagedArray(layer, false);
-                ManagedMatrix.Transpose(Transposed, layer);
+                if (transpose)
+                {
+                    var Transposed = new ManagedArray(cnn.Layers[layer].Bias, false);
+                    ManagedMatrix.Transpose(Transposed, cnn.Layers[layer].Bias);
 
-                var bitmap = new Bitmap(Transposed.x, Transposed.y, PixelFormat.Format24bppRgb);
+                    var bitmap = new Bitmap(Transposed.x, Transposed.y, PixelFormat.Format24bppRgb);
 
-                // Get normalization values
-                double min = 1.0;
-                double max = 0.0;
+                    // Get normalization values
+                    double min = 1.0;
+                    double max = 0.0;
 
-                GetNormalization(Transposed, ref min, ref max);
+                    GetNormalization(Transposed, ref min, ref max);
 
-                Draw(bitmap, Transposed, min, max);
+                    Draw(bitmap, Transposed, min, max);
 
-                ManagedOps.Free(Transposed);
+                    ManagedOps.Free(Transposed);
 
-                return bitmap;
+                    return bitmap;
+                }
+                else
+                {
+                    var bitmap = new Bitmap(cnn.Layers[layer].Bias.x, cnn.Layers[layer].Bias.y, PixelFormat.Format24bppRgb);
+
+                    // Get normalization values
+                    double min = 1.0;
+                    double max = 0.0;
+
+                    GetNormalization(cnn.Layers[layer].Bias, ref min, ref max);
+
+                    Draw(bitmap, cnn.Layers[layer].Bias, min, max);
+
+                    return bitmap;
+                }
             }
-            else
-            {
-                var bitmap = new Bitmap(layer.x, layer.y, PixelFormat.Format24bppRgb);
 
-                // Get normalization values
-                double min = 1.0;
-                double max = 0.0;
-
-                GetNormalization(layer, ref min, ref max);
-
-                Draw(bitmap, layer, min, max);
-
-                return bitmap;
-            }
+            // return empty bitmap
+            return new Bitmap(1, 1, PixelFormat.Format24bppRgb);
         }
 
         static void Draw(Bitmap bitmap, ManagedArray Activation, double min, double max)

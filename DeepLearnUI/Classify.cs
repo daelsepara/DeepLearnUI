@@ -14,7 +14,7 @@ namespace DeepLearnUI
             var Transposed = new ManagedArray(28, 28, 1);
             var TestDigit = new ManagedArray(28, 28, 1);
 
-            var ScaledDigit = Resize(Digit, 28, 28);
+            var ScaledDigit = Resize(Digit, 28, 28, true);
 
             Convert(ScaledDigit, TestDigit);
             ManagedMatrix.Transpose(Transposed, TestDigit);
@@ -41,7 +41,7 @@ namespace DeepLearnUI
         }
 
         // High Quality Bitmap Resize
-        public static Bitmap Resize(Bitmap image, int width, int height)
+        public static Bitmap Resize(Bitmap image, int width, int height, bool HighQuality = false)
         {
             var destRect = new Rectangle(0, 0, width, height);
             var destImage = new Bitmap(width, height);
@@ -52,7 +52,16 @@ namespace DeepLearnUI
             {
                 graphics.CompositingMode = CompositingMode.SourceCopy;
                 graphics.CompositingQuality = CompositingQuality.HighQuality;
-                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+                if (HighQuality)
+                {
+                    graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                }
+                else
+                {
+                    graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+                }
+
                 graphics.SmoothingMode = SmoothingMode.HighQuality;
                 graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 

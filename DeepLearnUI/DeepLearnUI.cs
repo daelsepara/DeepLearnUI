@@ -129,14 +129,14 @@ namespace DeepLearnUI
             CleanUpUI();
         }
 
-        private void RenderBitmap(PictureBox pb, Bitmap bm)
+        private void RenderBitmap(PictureBox pb, Bitmap bm, bool HighQuality = true)
         {
             if (pb.Image != null)
                 pb.Image.Dispose();
 
             if (bm != null)
             {
-                var stretched = Classify.Resize(bm, pb.Width, pb.Height);
+                var stretched = Classify.Resize(bm, pb.Width, pb.Height, HighQuality);
                 pb.Image = stretched.Clone(new Rectangle(0, 0, stretched.Width, stretched.Height), System.Drawing.Imaging.PixelFormat.Format24bppRgb);
                 stretched.Dispose();
             }
@@ -170,7 +170,7 @@ namespace DeepLearnUI
 
         public void CopyBitmap(Bitmap bitmap)
         {
-            RenderBitmap(DigitBox, bitmap);
+            RenderBitmap(DigitBox, bitmap, true);
         }
 
         public void DrawActivationMap(int layer, int map)
@@ -179,9 +179,15 @@ namespace DeepLearnUI
             {
                 var bitmap = Activation.Get(cnn, layer, map);
 
-                RenderBitmap(ActivationMap, bitmap);
+                RenderBitmap(ActivationMap, bitmap, false);
 
                 bitmap.Dispose();
+
+                var bias = Bias.Get(cnn, layer, false);
+
+                RenderBitmap(BiasMap, bias, false);
+
+                bias.Dispose();
             }
         }
 
@@ -191,7 +197,7 @@ namespace DeepLearnUI
             {
                 var bitmap = Feature.Get(cnn, layer, i, j);
 
-                RenderBitmap(FeatureMap, bitmap);
+                RenderBitmap(FeatureMap, bitmap, false);
 
                 bitmap.Dispose();
             }
@@ -202,17 +208,20 @@ namespace DeepLearnUI
             var output = FullyConnected.Get(cnn.Output);
             var featurevector = FullyConnected.Get(cnn.FeatureVector);
             var weights = FullyConnected.Get(cnn.Weights, false);
+            var bias = FullyConnected.Get(cnn.Bias, false);
 
             if (IsActivated)
             {
-                RenderBitmap(Output, output);
-                RenderBitmap(FeatureVector, featurevector);
-                RenderBitmap(Weights, weights);
+                RenderBitmap(Output, output, false);
+                RenderBitmap(FeatureVector, featurevector, false);
+                RenderBitmap(Weights, weights, false);
+                RenderBitmap(NetworkBias, bias, false);
             }
 
             output.Dispose();
             featurevector.Dispose();
             weights.Dispose();
+            bias.Dispose();
         }
 
         private void ButtonClassify_Click(object sender, EventArgs e)
@@ -290,7 +299,7 @@ namespace DeepLearnUI
                 try
                 {
                     var src = new Bitmap(OpenImageDialog.FileName);
-                    var scaled = Classify.Resize(src, DigitBox.Width, DigitBox.Height);
+                    var scaled = Classify.Resize(src, DigitBox.Width, DigitBox.Height, true);
 
                     if (Digit != null)
                     {

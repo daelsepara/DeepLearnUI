@@ -61,6 +61,12 @@
             this.ButtonClassify = new System.Windows.Forms.Button();
             this.DigitBox = new System.Windows.Forms.PictureBox();
             this.PageNetwork = new System.Windows.Forms.TabPage();
+            this.Weights = new System.Windows.Forms.PictureBox();
+            this.WeightsLabel = new System.Windows.Forms.Label();
+            this.Output = new System.Windows.Forms.PictureBox();
+            this.OutputLabel = new System.Windows.Forms.Label();
+            this.FeatureVector = new System.Windows.Forms.PictureBox();
+            this.FeatureVectorLabel = new System.Windows.Forms.Label();
             this.FeatureMapPanel = new System.Windows.Forms.Panel();
             this.FeatureMapJText = new System.Windows.Forms.TextBox();
             this.FeatureMapJLabel = new System.Windows.Forms.Label();
@@ -84,22 +90,22 @@
             this.ActivationMapLabel = new System.Windows.Forms.Label();
             this.NetworkLayersLabel = new System.Windows.Forms.Label();
             this.NetworkLayers = new System.Windows.Forms.ListBox();
-            this.FeatureVector = new System.Windows.Forms.PictureBox();
-            this.FeatureVectorLabel = new System.Windows.Forms.Label();
-            this.Output = new System.Windows.Forms.PictureBox();
-            this.OutputLabel = new System.Windows.Forms.Label();
-            this.Weights = new System.Windows.Forms.PictureBox();
-            this.WeightsLabel = new System.Windows.Forms.Label();
+            this.BiasMap = new System.Windows.Forms.PictureBox();
+            this.BiasMapLabel = new System.Windows.Forms.Label();
+            this.NetworkBias = new System.Windows.Forms.PictureBox();
+            this.NetworkBiasLabel = new System.Windows.Forms.Label();
             this.DeepLearnPages.SuspendLayout();
             this.PageClassify.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DigitBox)).BeginInit();
             this.PageNetwork.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Weights)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Output)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FeatureVector)).BeginInit();
             this.FeatureMapPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FeatureMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ActivationMap)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FeatureVector)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Output)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Weights)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BiasMap)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NetworkBias)).BeginInit();
             this.SuspendLayout();
             // 
             // DeepLearnPages
@@ -425,6 +431,8 @@
             // 
             this.PageNetwork.BackColor = System.Drawing.Color.Gainsboro;
             this.PageNetwork.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PageNetwork.Controls.Add(this.NetworkBias);
+            this.PageNetwork.Controls.Add(this.NetworkBiasLabel);
             this.PageNetwork.Controls.Add(this.Weights);
             this.PageNetwork.Controls.Add(this.WeightsLabel);
             this.PageNetwork.Controls.Add(this.Output);
@@ -449,8 +457,70 @@
             this.PageNetwork.TabIndex = 1;
             this.PageNetwork.Text = "Network";
             // 
+            // Weights
+            // 
+            this.Weights.BackColor = System.Drawing.Color.Black;
+            this.Weights.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Weights.Location = new System.Drawing.Point(195, 369);
+            this.Weights.Name = "Weights";
+            this.Weights.Size = new System.Drawing.Size(166, 55);
+            this.Weights.TabIndex = 39;
+            this.Weights.TabStop = false;
+            // 
+            // WeightsLabel
+            // 
+            this.WeightsLabel.AutoSize = true;
+            this.WeightsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.WeightsLabel.Location = new System.Drawing.Point(193, 353);
+            this.WeightsLabel.Name = "WeightsLabel";
+            this.WeightsLabel.Size = new System.Drawing.Size(53, 13);
+            this.WeightsLabel.TabIndex = 38;
+            this.WeightsLabel.Text = "Weights";
+            // 
+            // Output
+            // 
+            this.Output.BackColor = System.Drawing.Color.Black;
+            this.Output.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Output.Location = new System.Drawing.Point(285, 31);
+            this.Output.Name = "Output";
+            this.Output.Size = new System.Drawing.Size(166, 55);
+            this.Output.TabIndex = 37;
+            this.Output.TabStop = false;
+            // 
+            // OutputLabel
+            // 
+            this.OutputLabel.AutoSize = true;
+            this.OutputLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.OutputLabel.Location = new System.Drawing.Point(283, 15);
+            this.OutputLabel.Name = "OutputLabel";
+            this.OutputLabel.Size = new System.Drawing.Size(45, 13);
+            this.OutputLabel.TabIndex = 36;
+            this.OutputLabel.Text = "Output";
+            // 
+            // FeatureVector
+            // 
+            this.FeatureVector.BackColor = System.Drawing.Color.Black;
+            this.FeatureVector.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.FeatureVector.Location = new System.Drawing.Point(18, 369);
+            this.FeatureVector.Name = "FeatureVector";
+            this.FeatureVector.Size = new System.Drawing.Size(166, 55);
+            this.FeatureVector.TabIndex = 35;
+            this.FeatureVector.TabStop = false;
+            // 
+            // FeatureVectorLabel
+            // 
+            this.FeatureVectorLabel.AutoSize = true;
+            this.FeatureVectorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FeatureVectorLabel.Location = new System.Drawing.Point(16, 353);
+            this.FeatureVectorLabel.Name = "FeatureVectorLabel";
+            this.FeatureVectorLabel.Size = new System.Drawing.Size(91, 13);
+            this.FeatureVectorLabel.TabIndex = 34;
+            this.FeatureVectorLabel.Text = "Feature Vector";
+            // 
             // FeatureMapPanel
             // 
+            this.FeatureMapPanel.Controls.Add(this.BiasMap);
+            this.FeatureMapPanel.Controls.Add(this.BiasMapLabel);
             this.FeatureMapPanel.Controls.Add(this.FeatureMapJText);
             this.FeatureMapPanel.Controls.Add(this.FeatureMapJLabel);
             this.FeatureMapPanel.Controls.Add(this.FeatureMapIText);
@@ -465,7 +535,7 @@
             this.FeatureMapPanel.Controls.Add(this.FeatureMapLabel);
             this.FeatureMapPanel.Location = new System.Drawing.Point(195, 155);
             this.FeatureMapPanel.Name = "FeatureMapPanel";
-            this.FeatureMapPanel.Size = new System.Drawing.Size(256, 192);
+            this.FeatureMapPanel.Size = new System.Drawing.Size(395, 192);
             this.FeatureMapPanel.TabIndex = 33;
             // 
             // FeatureMapJText
@@ -686,65 +756,46 @@
             this.NetworkLayers.TabIndex = 0;
             this.NetworkLayers.SelectedIndexChanged += new System.EventHandler(this.NetworkLayers_SelectedIndexChanged);
             // 
-            // FeatureVector
+            // BiasMap
             // 
-            this.FeatureVector.BackColor = System.Drawing.Color.Black;
-            this.FeatureVector.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.FeatureVector.Location = new System.Drawing.Point(18, 369);
-            this.FeatureVector.Name = "FeatureVector";
-            this.FeatureVector.Size = new System.Drawing.Size(166, 55);
-            this.FeatureVector.TabIndex = 35;
-            this.FeatureVector.TabStop = false;
+            this.BiasMap.BackColor = System.Drawing.Color.Black;
+            this.BiasMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.BiasMap.Location = new System.Drawing.Point(250, 25);
+            this.BiasMap.Name = "BiasMap";
+            this.BiasMap.Size = new System.Drawing.Size(128, 128);
+            this.BiasMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.BiasMap.TabIndex = 41;
+            this.BiasMap.TabStop = false;
             // 
-            // FeatureVectorLabel
+            // BiasMapLabel
             // 
-            this.FeatureVectorLabel.AutoSize = true;
-            this.FeatureVectorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FeatureVectorLabel.Location = new System.Drawing.Point(16, 353);
-            this.FeatureVectorLabel.Name = "FeatureVectorLabel";
-            this.FeatureVectorLabel.Size = new System.Drawing.Size(91, 13);
-            this.FeatureVectorLabel.TabIndex = 34;
-            this.FeatureVectorLabel.Text = "Feature Vector";
+            this.BiasMapLabel.AutoSize = true;
+            this.BiasMapLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BiasMapLabel.Location = new System.Drawing.Point(247, 7);
+            this.BiasMapLabel.Name = "BiasMapLabel";
+            this.BiasMapLabel.Size = new System.Drawing.Size(31, 13);
+            this.BiasMapLabel.TabIndex = 40;
+            this.BiasMapLabel.Text = "Bias";
             // 
-            // Output
+            // NetworkBias
             // 
-            this.Output.BackColor = System.Drawing.Color.Black;
-            this.Output.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Output.Location = new System.Drawing.Point(285, 31);
-            this.Output.Name = "Output";
-            this.Output.Size = new System.Drawing.Size(166, 55);
-            this.Output.TabIndex = 37;
-            this.Output.TabStop = false;
+            this.NetworkBias.BackColor = System.Drawing.Color.Black;
+            this.NetworkBias.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.NetworkBias.Location = new System.Drawing.Point(370, 369);
+            this.NetworkBias.Name = "NetworkBias";
+            this.NetworkBias.Size = new System.Drawing.Size(166, 55);
+            this.NetworkBias.TabIndex = 41;
+            this.NetworkBias.TabStop = false;
             // 
-            // OutputLabel
+            // NetworkBiasLabel
             // 
-            this.OutputLabel.AutoSize = true;
-            this.OutputLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.OutputLabel.Location = new System.Drawing.Point(283, 15);
-            this.OutputLabel.Name = "OutputLabel";
-            this.OutputLabel.Size = new System.Drawing.Size(45, 13);
-            this.OutputLabel.TabIndex = 36;
-            this.OutputLabel.Text = "Output";
-            // 
-            // Weights
-            // 
-            this.Weights.BackColor = System.Drawing.Color.Black;
-            this.Weights.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Weights.Location = new System.Drawing.Point(195, 369);
-            this.Weights.Name = "Weights";
-            this.Weights.Size = new System.Drawing.Size(166, 55);
-            this.Weights.TabIndex = 39;
-            this.Weights.TabStop = false;
-            // 
-            // WeightsLabel
-            // 
-            this.WeightsLabel.AutoSize = true;
-            this.WeightsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WeightsLabel.Location = new System.Drawing.Point(193, 353);
-            this.WeightsLabel.Name = "WeightsLabel";
-            this.WeightsLabel.Size = new System.Drawing.Size(53, 13);
-            this.WeightsLabel.TabIndex = 38;
-            this.WeightsLabel.Text = "Weights";
+            this.NetworkBiasLabel.AutoSize = true;
+            this.NetworkBiasLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NetworkBiasLabel.Location = new System.Drawing.Point(368, 353);
+            this.NetworkBiasLabel.Name = "NetworkBiasLabel";
+            this.NetworkBiasLabel.Size = new System.Drawing.Size(82, 13);
+            this.NetworkBiasLabel.TabIndex = 40;
+            this.NetworkBiasLabel.Text = "Network Bias";
             // 
             // DeepLearnUI
             // 
@@ -765,13 +816,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.DigitBox)).EndInit();
             this.PageNetwork.ResumeLayout(false);
             this.PageNetwork.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Weights)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Output)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FeatureVector)).EndInit();
             this.FeatureMapPanel.ResumeLayout(false);
             this.FeatureMapPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FeatureMap)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ActivationMap)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FeatureVector)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Output)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Weights)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BiasMap)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NetworkBias)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -839,6 +892,10 @@
         private System.Windows.Forms.Label FeatureVectorLabel;
         private System.Windows.Forms.PictureBox Weights;
         private System.Windows.Forms.Label WeightsLabel;
+        private System.Windows.Forms.PictureBox BiasMap;
+        private System.Windows.Forms.Label BiasMapLabel;
+        private System.Windows.Forms.PictureBox NetworkBias;
+        private System.Windows.Forms.Label NetworkBiasLabel;
     }
 }
 
