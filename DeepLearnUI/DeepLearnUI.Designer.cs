@@ -61,6 +61,8 @@
             this.ButtonClassify = new System.Windows.Forms.Button();
             this.DigitBox = new System.Windows.Forms.PictureBox();
             this.PageNetwork = new System.Windows.Forms.TabPage();
+            this.NetworkBias = new System.Windows.Forms.PictureBox();
+            this.NetworkBiasLabel = new System.Windows.Forms.Label();
             this.Weights = new System.Windows.Forms.PictureBox();
             this.WeightsLabel = new System.Windows.Forms.Label();
             this.Output = new System.Windows.Forms.PictureBox();
@@ -68,6 +70,8 @@
             this.FeatureVector = new System.Windows.Forms.PictureBox();
             this.FeatureVectorLabel = new System.Windows.Forms.Label();
             this.FeatureMapPanel = new System.Windows.Forms.Panel();
+            this.BiasMap = new System.Windows.Forms.PictureBox();
+            this.BiasMapLabel = new System.Windows.Forms.Label();
             this.FeatureMapJText = new System.Windows.Forms.TextBox();
             this.FeatureMapJLabel = new System.Windows.Forms.Label();
             this.FeatureMapIText = new System.Windows.Forms.TextBox();
@@ -90,22 +94,18 @@
             this.ActivationMapLabel = new System.Windows.Forms.Label();
             this.NetworkLayersLabel = new System.Windows.Forms.Label();
             this.NetworkLayers = new System.Windows.Forms.ListBox();
-            this.BiasMap = new System.Windows.Forms.PictureBox();
-            this.BiasMapLabel = new System.Windows.Forms.Label();
-            this.NetworkBias = new System.Windows.Forms.PictureBox();
-            this.NetworkBiasLabel = new System.Windows.Forms.Label();
             this.DeepLearnPages.SuspendLayout();
             this.PageClassify.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DigitBox)).BeginInit();
             this.PageNetwork.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NetworkBias)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Weights)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Output)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FeatureVector)).BeginInit();
             this.FeatureMapPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BiasMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FeatureMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ActivationMap)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BiasMap)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NetworkBias)).BeginInit();
             this.SuspendLayout();
             // 
             // DeepLearnPages
@@ -457,6 +457,26 @@
             this.PageNetwork.TabIndex = 1;
             this.PageNetwork.Text = "Network";
             // 
+            // NetworkBias
+            // 
+            this.NetworkBias.BackColor = System.Drawing.Color.Black;
+            this.NetworkBias.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.NetworkBias.Location = new System.Drawing.Point(370, 369);
+            this.NetworkBias.Name = "NetworkBias";
+            this.NetworkBias.Size = new System.Drawing.Size(166, 55);
+            this.NetworkBias.TabIndex = 41;
+            this.NetworkBias.TabStop = false;
+            // 
+            // NetworkBiasLabel
+            // 
+            this.NetworkBiasLabel.AutoSize = true;
+            this.NetworkBiasLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NetworkBiasLabel.Location = new System.Drawing.Point(368, 353);
+            this.NetworkBiasLabel.Name = "NetworkBiasLabel";
+            this.NetworkBiasLabel.Size = new System.Drawing.Size(82, 13);
+            this.NetworkBiasLabel.TabIndex = 40;
+            this.NetworkBiasLabel.Text = "Network Bias";
+            // 
             // Weights
             // 
             this.Weights.BackColor = System.Drawing.Color.Black;
@@ -537,6 +557,27 @@
             this.FeatureMapPanel.Name = "FeatureMapPanel";
             this.FeatureMapPanel.Size = new System.Drawing.Size(395, 192);
             this.FeatureMapPanel.TabIndex = 33;
+            // 
+            // BiasMap
+            // 
+            this.BiasMap.BackColor = System.Drawing.Color.Black;
+            this.BiasMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.BiasMap.Location = new System.Drawing.Point(250, 25);
+            this.BiasMap.Name = "BiasMap";
+            this.BiasMap.Size = new System.Drawing.Size(128, 128);
+            this.BiasMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.BiasMap.TabIndex = 41;
+            this.BiasMap.TabStop = false;
+            // 
+            // BiasMapLabel
+            // 
+            this.BiasMapLabel.AutoSize = true;
+            this.BiasMapLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BiasMapLabel.Location = new System.Drawing.Point(247, 7);
+            this.BiasMapLabel.Name = "BiasMapLabel";
+            this.BiasMapLabel.Size = new System.Drawing.Size(31, 13);
+            this.BiasMapLabel.TabIndex = 40;
+            this.BiasMapLabel.Text = "Bias";
             // 
             // FeatureMapJText
             // 
@@ -756,47 +797,6 @@
             this.NetworkLayers.TabIndex = 0;
             this.NetworkLayers.SelectedIndexChanged += new System.EventHandler(this.NetworkLayers_SelectedIndexChanged);
             // 
-            // BiasMap
-            // 
-            this.BiasMap.BackColor = System.Drawing.Color.Black;
-            this.BiasMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.BiasMap.Location = new System.Drawing.Point(250, 25);
-            this.BiasMap.Name = "BiasMap";
-            this.BiasMap.Size = new System.Drawing.Size(128, 128);
-            this.BiasMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.BiasMap.TabIndex = 41;
-            this.BiasMap.TabStop = false;
-            // 
-            // BiasMapLabel
-            // 
-            this.BiasMapLabel.AutoSize = true;
-            this.BiasMapLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BiasMapLabel.Location = new System.Drawing.Point(247, 7);
-            this.BiasMapLabel.Name = "BiasMapLabel";
-            this.BiasMapLabel.Size = new System.Drawing.Size(31, 13);
-            this.BiasMapLabel.TabIndex = 40;
-            this.BiasMapLabel.Text = "Bias";
-            // 
-            // NetworkBias
-            // 
-            this.NetworkBias.BackColor = System.Drawing.Color.Black;
-            this.NetworkBias.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.NetworkBias.Location = new System.Drawing.Point(370, 369);
-            this.NetworkBias.Name = "NetworkBias";
-            this.NetworkBias.Size = new System.Drawing.Size(166, 55);
-            this.NetworkBias.TabIndex = 41;
-            this.NetworkBias.TabStop = false;
-            // 
-            // NetworkBiasLabel
-            // 
-            this.NetworkBiasLabel.AutoSize = true;
-            this.NetworkBiasLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NetworkBiasLabel.Location = new System.Drawing.Point(368, 353);
-            this.NetworkBiasLabel.Name = "NetworkBiasLabel";
-            this.NetworkBiasLabel.Size = new System.Drawing.Size(82, 13);
-            this.NetworkBiasLabel.TabIndex = 40;
-            this.NetworkBiasLabel.Text = "Network Bias";
-            // 
             // DeepLearnUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -816,15 +816,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.DigitBox)).EndInit();
             this.PageNetwork.ResumeLayout(false);
             this.PageNetwork.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NetworkBias)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Weights)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Output)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FeatureVector)).EndInit();
             this.FeatureMapPanel.ResumeLayout(false);
             this.FeatureMapPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BiasMap)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FeatureMap)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ActivationMap)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BiasMap)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NetworkBias)).EndInit();
             this.ResumeLayout(false);
 
         }
