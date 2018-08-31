@@ -1,4 +1,4 @@
-﻿namespace DeepLearnCS
+namespace DeepLearnCS
 {
     public class ManagedLayer
     {

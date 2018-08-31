@@ -1,4 +1,4 @@
-﻿namespace DeepLearnUI
+namespace DeepLearnUI
 {
     partial class DeepLearnUI
     {

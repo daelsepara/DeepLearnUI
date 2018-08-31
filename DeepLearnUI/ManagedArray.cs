@@ -1,4 +1,4 @@
-﻿namespace DeepLearnCS
+namespace DeepLearnCS
 {
     unsafe public class ManagedIntList
     {
