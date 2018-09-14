@@ -4,7 +4,7 @@ namespace DeepLearnCS
     {
         int* Data = null;
 
-        public int x = 0;
+        public int x;
 
         public ManagedIntList(int size)
         {
@@ -32,6 +32,8 @@ namespace DeepLearnCS
             MemOps.Free(Data);
 
             x = 0;
+
+            Data = null;
         }
     }
 
@@ -39,11 +41,11 @@ namespace DeepLearnCS
     {
         double* Data = null;
 
-        public int x = 0;
-        public int y = 0;
-        public int z = 0;
-        public int i = 0;
-        public int j = 0;
+        public int x;
+        public int y;
+        public int z;
+        public int i;
+        public int j;
 
         public ManagedArray()
         {
@@ -197,6 +199,8 @@ namespace DeepLearnCS
             z = 0;
             i = 0;
             j = 0;
+
+            Data = null;
         }
     }
 }
