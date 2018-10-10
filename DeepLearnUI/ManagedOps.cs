@@ -138,6 +138,45 @@ namespace DeepLearnCS
             }
         }
 
+        // Copies a 3D [x][y][z] to 4D [index][x][y][z] with maxpool
+        public static void Pool3D4D(ManagedArray dst, ManagedArray src, int index, int step)
+        {
+            if (dst.z == src.z)
+            {
+                for (int z = 0; z < dst.z; z++)
+                {
+                    for (int y = 0; y < dst.y; y++)
+                    {
+                        var dstoffset = (index * dst.z * dst.y + z * dst.y + y) * dst.x;
+
+                        for (int x = 0; x < dst.x; x++)
+                        {
+                            var maxval = 0.0;
+
+                            for (int yy = 0; yy < step; yy++)
+                            {
+                                for (int xx = 0; xx < step; xx++)
+                                {
+                                    var dx = x * step + xx;
+                                    var dy = y * step + yy;
+
+                                    if (dx < src.x && dy < src.y)
+                                    {
+                                        var val = src[(z * src.y + dy) * src.x + dx];
+
+                                        if (val > maxval)
+                                            maxval = val;
+                                    }
+                                }
+                            }
+
+                            dst[dstoffset + x] = maxval;
+                        }
+                    }
+                }
+            }
+        }
+
         // Copies a 3D [x][y][z] to 4D [index][x][y][z]
         public static void Copy3D4D(ManagedArray dst, ManagedArray src, int index)
         {

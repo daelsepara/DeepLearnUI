@@ -27,6 +27,11 @@ namespace DeepLearnCS
             }
         }
 
+        public int Length()
+        {
+            return x;
+        }
+
         public void Free()
         {
             MemOps.Free(Data);

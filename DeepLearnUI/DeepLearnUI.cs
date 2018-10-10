@@ -97,25 +97,7 @@ namespace DeepLearnUI
 
         void InitializeNetwork()
         {
-            cnn = new ManagedCNN();
-
-            cnn.AddLayer(new ManagedLayer());
-            cnn.AddLayer(new ManagedLayer(6, 5));
-            cnn.AddLayer(new ManagedLayer(2));
-            cnn.AddLayer(new ManagedLayer(12, 5));
-            cnn.AddLayer(new ManagedLayer(2));
-
-            // Setup layer 1 - convolution layer
-            cnn.LoadFeatureMap(BaseDirectory, "Layer02FeatureMap", 1, 5, 5, 1, 6);
-            cnn.LoadFeatureMapBias(BaseDirectory, "Layer02Bias", 1, 6);
-
-            // Setup layer 3 - convolution layer
-            cnn.LoadFeatureMap(BaseDirectory, "Layer04FeatureMap", 3, 5, 5, 6, 12);
-            cnn.LoadFeatureMapBias(BaseDirectory, "Layer04Bias", 3, 12);
-
-            // Load Network Weights
-            cnn.LoadNetworkWeights(BaseDirectory, "NetworkWeights", 192, 10);
-            cnn.LoadNetworkBias(BaseDirectory, "NetworkBias", 10);
+            cnn = Utility.LoadCNN(BaseDirectory, "modelcnn");
         }
 
         void CleanUpNetwork()

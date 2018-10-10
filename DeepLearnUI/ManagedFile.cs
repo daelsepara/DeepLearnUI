@@ -8,7 +8,7 @@ namespace DeepLearnCS
     {
         public static CultureInfo ci = new CultureInfo("en-us");
 
-        public static void Load1D(string filename, ManagedArray A)
+        public static void Load1D(string filename, ManagedArray A, char delimiter = ',')
         {
             if (File.Exists(filename))
             {
@@ -16,7 +16,7 @@ namespace DeepLearnCS
 
                 if (lines.Length > 0)
                 {
-                    var tokens = lines[0].Split(',');
+                    var tokens = lines[0].Split(delimiter);
 
                     for (int x = 0; x < A.Length(); x++)
                     {
@@ -26,7 +26,7 @@ namespace DeepLearnCS
             }
         }
 
-        public static void Save1D(string filename, ManagedArray A)
+        public static void Save1D(string filename, ManagedArray A, char delimiter = ',')
         {
             using (var file = new StreamWriter(filename, false))
             {
@@ -36,7 +36,7 @@ namespace DeepLearnCS
 
                     if (x < A.x - 1)
                     {
-                        file.Write(",");
+                        file.Write(delimiter);
                     }
                 }
 
@@ -68,12 +68,11 @@ namespace DeepLearnCS
             }
         }
 
-        public static void Load2D(string filename, ManagedArray A)
+        public static void Load2D(string filename, ManagedArray A, char delimiter = ',')
         {
             if (File.Exists(filename))
             {
                 var temp = new ManagedArray(A.x, A.y);
-
 
                 var lines = File.ReadAllLines(filename);
 
@@ -81,7 +80,7 @@ namespace DeepLearnCS
                 {
                     if (y < lines.Length)
                     {
-                        var tokens = lines[y].Split(',');
+                        var tokens = lines[y].Split(delimiter);
 
                         for (int x = 0; x < A.x; x++)
                         {
@@ -96,7 +95,7 @@ namespace DeepLearnCS
             }
         }
 
-        public static void Load2DV2(string filename, ManagedArray A)
+        public static void Load2DV2(string filename, ManagedArray A, char delimiter = ',')
         {
             if (File.Exists(filename))
             {
@@ -110,7 +109,7 @@ namespace DeepLearnCS
 
                         if (line != null)
                         {
-                            var tokens = line.Split(',');
+                            var tokens = line.Split(delimiter);
 
                             for (int x = 0; x < A.x; x++)
                             {
@@ -126,28 +125,29 @@ namespace DeepLearnCS
             }
         }
 
-        public static void Save2D(string filename, ManagedArray A)
+        public static void Save2D(string filename, ManagedArray A, char delimiter = ',')
         {
             using (var file = new StreamWriter(filename, false))
             {
                 for (int y = 0; y < A.y; y++)
                 {
+                    if (y > 0)
+                        file.WriteLine();
+
                     for (int x = 0; x < A.x; x++)
                     {
                         file.Write(A[x, y].ToString(ci));
 
                         if (x < A.x - 1)
                         {
-                            file.Write(",");
+                            file.Write(delimiter);
                         }
                     }
-
-                    file.WriteLine();
                 }
             }
         }
 
-        public static void Load2D4D(string filename, ManagedArray A, int i, int j)
+        public static void Load2D4D(string filename, ManagedArray A, int i, int j, char delimiter = ',')
         {
             if (File.Exists(filename))
             {
@@ -159,7 +159,7 @@ namespace DeepLearnCS
                 {
                     if (y < lines.Length)
                     {
-                        var tokens = lines[y].Split(',');
+                        var tokens = lines[y].Split(delimiter);
 
                         for (int x = 0; x < A.x; x++)
                         {
@@ -174,7 +174,7 @@ namespace DeepLearnCS
             }
         }
 
-        public static void Save2D4D(string filename, ManagedArray A, int i, int j)
+        public static void Save2D4D(string filename, ManagedArray A, int i, int j, char delimiter = ',')
         {
             using (var file = new StreamWriter(filename, false))
             {
@@ -190,7 +190,7 @@ namespace DeepLearnCS
 
                         if (x < A.x - 1)
                         {
-                            file.Write(",");
+                            file.Write(delimiter);
                         }
                     }
 
@@ -201,7 +201,7 @@ namespace DeepLearnCS
             }
         }
 
-        public static void Load3D(string filename, ManagedArray A)
+        public static void Load3D(string filename, ManagedArray A, char delimiter = ',')
         {
             if (File.Exists(filename))
             {
@@ -211,7 +211,7 @@ namespace DeepLearnCS
                 {
                     if (y < lines.Length)
                     {
-                        var tokens = lines[y].Split(',');
+                        var tokens = lines[y].Split(delimiter);
 
                         for (int z = 0; z < A.z; z++)
                         {
@@ -225,7 +225,7 @@ namespace DeepLearnCS
             }
         }
 
-        public static void Load3DV2(string filename, ManagedArray A)
+        public static void Load3DV2(string filename, ManagedArray A, char delimiter = ',')
         {
             if (File.Exists(filename))
             {
@@ -237,7 +237,7 @@ namespace DeepLearnCS
 
                         if (line != null)
                         {
-                            var tokens = line.Split(',');
+                            var tokens = line.Split(delimiter);
 
                             for (int z = 0; z < A.z; z++)
                             {
@@ -252,7 +252,7 @@ namespace DeepLearnCS
             }
         }
 
-        public static void Save3D(string filename, ManagedArray A)
+        public static void Save3D(string filename, ManagedArray A, char delimiter = ',')
         {
             using (var file = new StreamWriter(filename, false))
             {
@@ -266,7 +266,7 @@ namespace DeepLearnCS
 
                             if (z < A.z - 1 || x < A.x - 1)
                             {
-                                file.Write(",");
+                                file.Write(delimiter);
                             }
                         }
                     }
@@ -276,7 +276,7 @@ namespace DeepLearnCS
             }
         }
 
-        public static void Load3D2D(string filename, ManagedArray A)
+        public static void Load3D2D(string filename, ManagedArray A, char delimiter = ',')
         {
             if (File.Exists(filename))
             {
@@ -295,7 +295,7 @@ namespace DeepLearnCS
 
                     if (y < lines.Length)
                     {
-                        var tokens = lines[y].Split(',');
+                        var tokens = lines[y].Split(delimiter);
 
                         for (int z = 0; z < zz; z++)
                         {
@@ -311,7 +311,7 @@ namespace DeepLearnCS
             }
         }
 
-        public static void Load3D2DV2(string filename, ManagedArray A)
+        public static void Load3D2DV2(string filename, ManagedArray A, char delimiter = ',')
         {
             if (File.Exists(filename))
             {
@@ -332,7 +332,7 @@ namespace DeepLearnCS
                         {
                             var xoffset = y * xx;
 
-                            var tokens = line.Split(',');
+                            var tokens = line.Split(delimiter);
 
                             for (int z = 0; z < zz; z++)
                             {

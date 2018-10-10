@@ -106,8 +106,8 @@ namespace DeepLearnCS
 
             // 'onum' is the number of labels, that's why it is calculated using size(y, 1). If you have 20 labels so the output of the network will be 20 neurons.
             // 'fvnum' is the number of output neurons at the last layer, the layer just before the output layer.
-            // 'Bias' is the biases of the output neurons.
-            // 'Weights' is the weights between the last layer and the output neurons. Note that the last layer is fully connected to the output layer, that's why the size of the weights is (onum * fvnum)
+            // 'ffb' is the biases of the output neurons.
+            // 'ffW' is the weights between the last layer and the output neurons. Note that the last layer is fully connected to the output layer, that's why the size of the weights is (onum * fvnum)
 
             var fvnum = MapSizeX * MapSizeY * InputMaps;
             var onum = classes;
@@ -118,7 +118,7 @@ namespace DeepLearnCS
         }
 
         // Compute Forward Transform on 3D Input
-        public void FeedForward(ManagedArray batch)
+        public void FeedForward(ManagedArray batch, bool pool = false)
         {
             var n = Layers.Count;
 
@@ -197,7 +197,15 @@ namespace DeepLearnCS
 
                         // Subsample
                         ManagedConvolution.Valid(Activation, FeatureMap, z);
-                        ManagedOps.Copy3D4D(Layers[l].Activation, z, j, Layers[l].Scale);
+
+                        if (pool)
+                        {
+                            ManagedOps.Pool3D4D(Layers[l].Activation, z, j, Layers[l].Scale);
+                        }
+                        else
+                        {
+                            ManagedOps.Copy3D4D(Layers[l].Activation, z, j, Layers[l].Scale);
+                        }
                     }
 
                     ManagedOps.Free(Activation, FeatureMap, z);
@@ -484,7 +492,7 @@ namespace DeepLearnCS
         }
 
         // Classify data using trained network parameters and count classification errors
-        public int Classify(ManagedArray test_input, ManagedArray test_output, int classes, int items, int batchsize, ManagedArray classification)
+        public int Classify(ManagedArray test_input, ManagedArray test_output, int classes, int items, int batchsize, ManagedArray classification, bool pool = false)
         {
             var errors = 0;
 
@@ -503,7 +511,7 @@ namespace DeepLearnCS
                 ManagedOps.Copy2D(tempy, test_output, i, 0);
 
                 // classify
-                FeedForward(tempx);
+                FeedForward(tempx, pool);
 
                 // count classifcation errors
                 errors += Test(tempy, tempclass);
@@ -535,7 +543,7 @@ namespace DeepLearnCS
                     ManagedOps.Copy3D(temp_input, input, 0, 0, i);
                     ManagedOps.Copy2D(temp_output, output, i, 0);
 
-                    FeedForward(temp_input);
+                    FeedForward(temp_input, opts.Pool);
                     BackPropagation(temp_output);
                     ApplyGradients(opts);
 

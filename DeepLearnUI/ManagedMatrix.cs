@@ -145,6 +145,15 @@ namespace DeepLearnCS
             }
         }
 
+        public static ManagedArray Transpose(ManagedArray src)
+        {
+            var dst = new ManagedArray(src.y, src.x, false);
+
+            Transpose(dst, src);
+
+            return dst;
+        }
+
         // 2D Matrix multiplication
         public static void Multiply(ManagedArray result, ManagedArray A, ManagedArray B)
         {
@@ -165,24 +174,94 @@ namespace DeepLearnCS
                     }
                 }
             }
-        }
-
-        // Element by element multiplication
-        public static void Multiply(ManagedArray A, ManagedArray B)
-        {
-            for (int x = 0; x < A.Length(); x++)
+            else
             {
-                A[x] = A[x] * B[x];
+                Console.WriteLine("Incompatible dimensions");
             }
         }
 
-        // Matrix Addition
+        // Element by element multiplication
+        public static void Product(ManagedArray result, ManagedArray A, ManagedArray B)
+        {
+            for (int x = 0; x < A.Length(); x++)
+            {
+                result[x] = A[x] * B[x];
+            }
+        }
+
+        // Element by element multiplication
+        public static void Product(ManagedArray A, ManagedArray B)
+        {
+            Product(A, A, B);
+        }
+
+        // Element by element multiplication
+        public static ManagedArray BSXMUL(ManagedArray A, ManagedArray B)
+        {
+            var result = new ManagedArray(A);
+
+            for (int x = 0; x < A.Length(); x++)
+            {
+                result[x] = A[x] * B[x];
+            }
+
+            return result;
+        }
+
+        // Element by element multiplication
+        public static ManagedArray BSXADD(ManagedArray A, ManagedArray B)
+        {
+            var result = new ManagedArray(A);
+
+            for (int x = 0; x < A.Length(); x++)
+            {
+                result[x] = A[x] + B[x];
+            }
+
+            return result;
+        }
+
+        // Matrix multiplication
+        public static ManagedArray Multiply(ManagedArray A, ManagedArray B)
+        {
+            var result = new ManagedArray(B.x, A.y);
+
+            Multiply(result, A, B);
+
+            return result;
+        }
+
+        // Matrix Addition with Scaling
         public static void Add(ManagedArray A, ManagedArray B, double Scale = 1.0)
         {
             for (int x = 0; x < A.Length(); x++)
             {
                 A[x] = A[x] + Scale * B[x];
             }
+        }
+
+        public static ManagedArray Pow(ManagedArray A, double power)
+        {
+            var result = new ManagedArray(A);
+
+            for (int x = 0; x < A.Length(); x++)
+            {
+                result[x] = Math.Pow(A[x], power);
+            }
+
+            return result;
+        }
+
+        public static ManagedArray Pow(double A, ManagedArray powers)
+        {
+            var result = new ManagedArray(powers);
+
+            for (var i = 0; i < powers.Length(); i++)
+            {
+                result[i] = Math.Pow(A, powers[i]);
+            }
+
+            return result;
         }
 
         // Matrix * Constant Multiplication
@@ -424,6 +503,57 @@ namespace DeepLearnCS
             }
         }
 
+        // Transforms x into a column vector
+        public static void Vector(ManagedArray x)
+        {
+            var temp = new ManagedArray(x.y, x.x);
+
+            Transpose(temp, x);
+
+            x.Reshape(1, x.Length());
+
+            for (var i = 0; i < x.Length(); i++)
+            {
+                x[i] = temp[i];
+            }
+
+            ManagedOps.Free(temp);
+        }
+
+        public static ManagedArray RowSums(ManagedArray A)
+        {
+            var result = new ManagedArray(1, A.y);
+
+            for (var i = 0; i < A.y; i++)
+            {
+                result[i] = 0.0;
+
+                for (var j = 0; j < A.x; j++)
+                {
+                    result[i] += A[j, i];
+                }
+            }
+
+            return result;
+        }
+
+        public static ManagedArray ColSums(ManagedArray A)
+        {
+            var result = new ManagedArray(A.x, 1);
+
+            for (var j = 0; j < A.x; j++)
+            {
+                result[j] = 0.0;
+
+                for (var i = 0; i < A.y; i++)
+                {
+                    result[i] += A[j, i];
+                }
+            }
+
+            return result;
+        }
+
         // Create a 2D Diagonal/Identity matrix of size [dim][dim]
         public static ManagedArray Diag(int dim)
         {
@@ -443,6 +573,12 @@ namespace DeepLearnCS
             }
 
             return null;
+        }
+
+        public static void Sqrt(ManagedArray x)
+        {
+            for (var i = 0; i < x.Length(); i++)
+                x[i] = Math.Sqrt(x[i]);
         }
     }
 }
