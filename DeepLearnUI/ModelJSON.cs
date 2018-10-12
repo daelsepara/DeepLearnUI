@@ -295,13 +295,16 @@ namespace DeepLearnCS
             {
                 var filename = string.Format("{0}/{1}.json", BaseDirectory, Filename);
 
-                using (var file = new StreamReader(filename))
+                if (File.Exists(filename))
                 {
-                    string line = "";
-
-                    while (!string.IsNullOrEmpty(line = file.ReadLine()))
+                    using (var file = new StreamReader(filename))
                     {
-                        json += line;
+                        string line = "";
+
+                        while (!string.IsNullOrEmpty(line = file.ReadLine()))
+                        {
+                            json += line;
+                        }
                     }
                 }
             }
@@ -317,13 +320,16 @@ namespace DeepLearnCS
             {
                 var filename = string.Format("{0}/{1}.json", BaseDirectory, Filename);
 
-                using (var file = new StreamReader(filename))
+                if (File.Exists(filename))
                 {
-                    string line = "";
-
-                    while (!string.IsNullOrEmpty(line = file.ReadLine()))
+                    using (var file = new StreamReader(filename))
                     {
-                        json += line;
+                        string line = "";
+
+                        while (!string.IsNullOrEmpty(line = file.ReadLine()))
+                        {
+                            json += line;
+                        }
                     }
                 }
             }

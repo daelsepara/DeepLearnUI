@@ -159,6 +159,9 @@ namespace DeepLearnCS
         {
             if (A.x == B.y)
             {
+                /*
+
+                // Naive version
                 result.Resize(B.x, A.y, false);
 
                 for (int y = 0; y < A.y; y++)
@@ -172,6 +175,36 @@ namespace DeepLearnCS
                             result[x, y] = result[x, y] + A[k, y] * B[x, k];
                         }
                     }
+                }
+                */
+
+                // slightly faster (due to memory access pattern) but still naive
+                // see: https://tavianator.com/a-quick-trick-for-faster-naive-matrix-multiplication/
+                var dest = 0;
+                var lhs = 0;
+                var rhs = 0;
+                var mid = A.x;
+                var cols = B.x;
+                var rows = A.y;
+
+                result.Resize(cols, rows, true);
+
+                for (int y = 0; y < rows; y++)
+                {
+                    rhs = 0;
+
+                    for (int x = 0; x < mid; x++)
+                    {
+                        for (int k = 0; k < cols; k++)
+                        {
+                            result[dest + k] += A[lhs + x] * B[rhs + k];
+                        }
+
+                        rhs += cols;
+                    }
+
+                    dest += cols;
+                    lhs += mid;
                 }
             }
             else
