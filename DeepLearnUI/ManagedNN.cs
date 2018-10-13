@@ -179,6 +179,42 @@ namespace DeepLearnCS
             return result;
         }
 
+        public ManagedArray Predict(ManagedArray test, NeuralNetworkOptions opts)
+        {
+            Forward(test);
+
+            var prediction = new ManagedArray(test.y);
+
+            for (int y = 0; y < test.y; y++)
+            {
+                if (opts.Categories > 1)
+                {
+                    double maxval = Double.MinValue;
+
+                    for (int x = 0; x < opts.Categories; x++)
+                    {
+                        double val = Yk[x, y];
+
+                        if (val > maxval)
+                        {
+                            maxval = val;
+                        }
+                    }
+
+                    prediction[y] = maxval;
+                }
+                else
+                {
+                    prediction[y] = Yk[y];
+                }
+            }
+
+            // cleanup of arrays allocated in Forward
+            ManagedOps.Free(A2, Yk, Z2);
+
+            return prediction;
+        }
+
         public ManagedIntList Classify(ManagedArray test, NeuralNetworkOptions opts, double threshold = 0.5)
         {
             Forward(test);
@@ -217,17 +253,28 @@ namespace DeepLearnCS
             return classification;
         }
 
-        public void Setup(ManagedArray output, NeuralNetworkOptions opts)
+        public void SetupLabels(ManagedArray output, NeuralNetworkOptions opts)
         {
-            Wji = new ManagedArray(opts.Inputs + 1, opts.Nodes);
-            Wkj = new ManagedArray(opts.Nodes + 1, opts.Categories);
-
             Y_output = Labels(output, opts);
+        }
+
+        public void Setup(ManagedArray output, NeuralNetworkOptions opts, bool Reset = true)
+        {
+            if (Reset)
+            {
+                Wji = new ManagedArray(opts.Inputs + 1, opts.Nodes);
+                Wkj = new ManagedArray(opts.Nodes + 1, opts.Categories);
+            }
+
+            SetupLabels(output, opts);
 
             var random = new Random(Guid.NewGuid().GetHashCode());
 
-            Rand(Wji, random);
-            Rand(Wkj, random);
+            if (Reset)
+            {
+                Rand(Wji, random);
+                Rand(Wkj, random);
+            }
 
             Cost = 1.0;
             L2 = 1.0;
@@ -337,9 +384,9 @@ namespace DeepLearnCS
             return new FuncOutput(Cost, X);
         }
 
-        public void SetupOptimizer(ManagedArray input, ManagedArray output, NeuralNetworkOptions opts)
+        public void SetupOptimizer(ManagedArray input, ManagedArray output, NeuralNetworkOptions opts, bool Reset = true)
         {
-            Setup(output, opts);
+            Setup(output, opts, Reset);
 
             Optimizer.MaxIterations = opts.Epochs;
 
