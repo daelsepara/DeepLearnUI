@@ -20,8 +20,8 @@ namespace DeepLearnUI
                 var bitmap = new Bitmap(Transposed.x, Transposed.y, PixelFormat.Format24bppRgb);
 
                 // Get normalization values
-                double min = 1.0;
-                double max = 0.0;
+                double min = Double.MaxValue;
+                double max = Double.MinValue;
 
                 GetNormalization(Transposed, ref min, ref max);
 
@@ -36,8 +36,8 @@ namespace DeepLearnUI
                 var bitmap = new Bitmap(layer.x, layer.y, PixelFormat.Format24bppRgb);
 
                 // Get normalization values
-                double min = 1.0;
-                double max = 0.0;
+                double min = Double.MaxValue;
+                double max = Double.MinValue;
 
                 GetNormalization(layer, ref min, ref max);
 
@@ -61,9 +61,9 @@ namespace DeepLearnUI
                 {
                     var startIndex = y * bmpData.Stride + x * Channels;
 
-                    if (max - min != 0.0)
+                    if (Math.Abs(max - min) > 0)
                     {
-                        var DoubleVal = 255.0 * (Activation[x, y] - min) / (max - min);
+                        var DoubleVal = 255 * (Activation[x, y] - min) / (max - min);
                         var ByteVal = Convert.ToByte(DoubleVal);
 
                         Marshal.WriteByte(bmpData.Scan0, startIndex, ByteVal);
@@ -83,8 +83,8 @@ namespace DeepLearnUI
         public static void GetNormalization(ManagedArray array, ref double min, ref double max)
         {
             // Get normalization values
-            min = 1.0;
-            max = 0.0;
+            min = Double.MaxValue;
+            max = Double.MinValue;
 
             for (int y = 0; y < array.y; y++)
             {

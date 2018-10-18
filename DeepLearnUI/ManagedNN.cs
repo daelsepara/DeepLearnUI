@@ -28,7 +28,7 @@ namespace DeepLearnCS
         {
             // add bias column to input layer
             var InputBias = new ManagedArray(1, training.y);
-            ManagedOps.Set(InputBias, 1.0);
+            ManagedOps.Set(InputBias, 1);
 
             // x = cbind(array(1, c(nrow(training_set), 1)), training_set)
             var x = ManagedMatrix.CBind(InputBias, training);
@@ -47,7 +47,7 @@ namespace DeepLearnCS
 
             // add bias column to hidden layer output
             var HiddenBias = new ManagedArray(1, Zj.y);
-            ManagedOps.Set(HiddenBias, 1.0);
+            ManagedOps.Set(HiddenBias, 1);
 
             // a_2 = cbind(array(1, c(nrow(z_j), 1)), z_j)
             A2 = ManagedMatrix.CBind(HiddenBias, Zj);
@@ -73,7 +73,7 @@ namespace DeepLearnCS
         {
             // add bias column to input layer
             var InputBias = new ManagedArray(1, training.y);
-            ManagedOps.Set(InputBias, 1.0);
+            ManagedOps.Set(InputBias, 1);
 
             // x = cbind(array(1, c(nrow(training_set), 1)), training_set)
             var x = ManagedMatrix.CBind(InputBias, training);
@@ -107,13 +107,13 @@ namespace DeepLearnCS
             ManagedMatrix.Multiply(DeltaWkj, tD3, A2);
 
             // cost = sum(-y_matrix * log(y_k) - (1 - y_matrix) * log(1 - y_k))
-            Cost = 0.0;
-            L2 = 0.0;
+            Cost = 0;
+            L2 = 0;
 
             for (int i = 0; i < Y_output.Length(); i++)
             {
                 L2 += Math.Sqrt(D3[i] * D3[i]);
-                Cost += (-Y_output[i] * Math.Log(Yk[i]) - (1.0 - Y_output[i]) * Math.Log(1.0 - Yk[i]));
+                Cost += (-Y_output[i] * Math.Log(Yk[i]) - (1 - Y_output[i]) * Math.Log(1 - Yk[i]));
             }
 
             // cost = cost / m
@@ -122,8 +122,8 @@ namespace DeepLearnCS
             Cost /= training.y;
             L2 /= training.y;
 
-            ManagedMatrix.Multiply(DeltaWji, 1.0 / training.y);
-            ManagedMatrix.Multiply(DeltaWkj, 1.0 / training.y);
+            ManagedMatrix.Multiply(DeltaWji, (double)1 / training.y);
+            ManagedMatrix.Multiply(DeltaWkj, (double)1 / training.y);
 
             // cleanup
             ManagedOps.Free(D2, D3, DZ2, InputBias);
@@ -150,7 +150,7 @@ namespace DeepLearnCS
         {
             for (int x = 0; x < rand.Length(); x++)
             {
-                rand[x] = (random.NextDouble() - 0.5) * 2.0;
+                rand[x] = (random.NextDouble() - (double)1 / 2) * 2;
             }
         }
 
@@ -215,7 +215,7 @@ namespace DeepLearnCS
             return prediction;
         }
 
-        public ManagedIntList Classify(ManagedArray test, NeuralNetworkOptions opts, double threshold = 0.5)
+        public ManagedIntList Classify(ManagedArray test, NeuralNetworkOptions opts, double threshold = (double)1 / 2)
         {
             Forward(test);
 
@@ -225,7 +225,7 @@ namespace DeepLearnCS
             {
                 if (opts.Categories > 1)
                 {
-                    double maxval = 0.0;
+                    double maxval = 0;
                     int maxind = 0;
 
                     for (int x = 0; x < opts.Categories; x++)
@@ -276,8 +276,8 @@ namespace DeepLearnCS
                 Rand(Wkj, random);
             }
 
-            Cost = 1.0;
-            L2 = 1.0;
+            Cost = 1;
+            L2 = 1;
 
             Iterations = 0;
         }

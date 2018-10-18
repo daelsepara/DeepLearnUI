@@ -151,7 +151,7 @@ namespace DeepLearnCS
 
                         for (int x = 0; x < dst.x; x++)
                         {
-                            var maxval = 0.0;
+                            double maxval = 0;
 
                             for (int yy = 0; yy < step; yy++)
                             {

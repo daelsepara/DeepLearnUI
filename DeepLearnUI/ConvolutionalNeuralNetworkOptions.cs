@@ -21,7 +21,7 @@ namespace DeepLearnCS
 
         public ConvolutionalNeuralNetworkOptions()
         {
-            Alpha = 1.0;
+            Alpha = 1;
             BatchSize = 50;
             Epochs = 1;
             Items = 50;

@@ -63,7 +63,7 @@ namespace DeepLearnCS
                     {
                         for (int ci = minx; ci < minx + limx; ci++)
                         {
-                            result[ci - minx, cj - miny, ck - minz] = 0.0;
+                            result[ci - minx, cj - miny, ck - minz] = 0;
 
                             for (int kz = 0; kz < input.z; kz++)
                             {

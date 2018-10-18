@@ -23,13 +23,13 @@ namespace DeepLearnCS
 
         public NeuralNetworkOptions()
         {
-            Alpha = 1.0;
+            Alpha = 1;
             Epochs = 1;
             Inputs = 2; // Input layer features (i)
             Nodes = 16; // Hidden layer nodes (j)
             Items = 50;  // number of input items
             Categories = 2; // number of output categories (k)
-            Tolerance = 0.001;
+            Tolerance = (double)1 / 1000;
         }
     }
 }

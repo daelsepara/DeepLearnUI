@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 public class FuncOutput
 {
@@ -69,23 +70,23 @@ public class FuncOutput
 public class Optimize
 {
     // RHO and SIG are the constants in the Wolfe-Powell conditions
-    double RHO = 0.01;
-    double SIG = 0.5;
+    double RHO = (double)1 / 100;
+    double SIG = (double)1 / 2;
 
     // don't reevaluate within 0.1 of the limit of the current bracket
-    double INT = 0.1;
+    double INT = (double)1 / 10;
 
     // extrapolate maximum 3 times the current bracket
-    double EXT = 3.0;
+    double EXT = 3;
 
     // max 20 function evaluations per line search
     int MAX = 20;
 
     // maximum allowed slope ratio
-    double RATIO = 100.0;
+    double RATIO = 100;
 
     // reduction parameter
-    double Red = 1.0;
+    double Red = 1;
 
     double[] s;
     double[] df1;
@@ -111,7 +112,7 @@ public class Optimize
     {
         if (a.Length == b.Length)
         {
-            var dot = 0.0;
+            double dot = 0;
 
             for (var i = 0; i < a.Length; i++)
                 dot += a[i] * b[i];
@@ -119,10 +120,10 @@ public class Optimize
             return dot;
         }
 
-        return 0.0;
+        return 0;
     }
 
-    void Add(double[] dst, double[] src, double scale = 1.0)
+    void Add(double[] dst, double[] src, double scale = 1)
     {
         if (dst.Length == src.Length)
         {
@@ -131,7 +132,7 @@ public class Optimize
         }
     }
 
-    void Copy(double[] dst, double[] src, double scale = 1.0)
+    void Copy(double[] dst, double[] src, double scale = 1)
     {
         if (dst.Length == src.Length)
         {
@@ -164,13 +165,13 @@ public class Optimize
             iteration++;
 
         // search direction is steepest
-        Copy(s, df1, -1.0);
+        Copy(s, df1, -1);
 
         // this is the slope
         d1 = -Multiply(s, s);
 
         // initial step is red / (|s|+1)
-        z1 = Red / (1.0 - d1);
+        z1 = Red / (1 - d1);
 
         X0 = new double[X.Length];
         DF0 = new double[X.Length];
@@ -179,7 +180,7 @@ public class Optimize
     public bool Step(Func<double[], FuncOutput> F, double[] X)
     {
         // from R/Matlab smallest non-zero normalized floating point number
-        double realmin = 2.225074e-308;
+        double realmin = Convert.ToDouble("2.225074e-308", new CultureInfo("en-US"));
 
         // count iterations?!
         if (length > 0)
@@ -223,7 +224,7 @@ public class Optimize
 
         // initialize quantities
         bool success = false;
-        double limit = -1.0;
+        double limit = -1;
 
         FuncOutput eval;
 
@@ -234,20 +235,20 @@ public class Optimize
                 // tighten bracket
                 limit = z1;
 
-                var A = 0.0;
-                var B = 0.0;
-                var z2 = 0.0;
+                double A = 0;
+                double B = 0;
+                double z2 = 0;
 
                 if (f2 > f1)
                 {
                     // quadratic fit 
-                    z2 = z3 - ((0.5 * d3 * z3 * z3) / (d3 * z3 + f2 - f3));
+                    z2 = z3 - (((double)1 / 2 * d3 * z3 * z3) / (d3 * z3 + f2 - f3));
                 }
                 else
                 {
                     // cubic fit
-                    A = (6.0 * (f2 - f3)) / (z3 + (3.0 * (d2 + d3)));
-                    B = (3.0 * (f3 - f2) - (z3 * ((d3 + 2.0) * d2)));
+                    A = (6 * (f2 - f3)) / (z3 + (3 * (d2 + d3)));
+                    B = (3 * (f3 - f2) - (z3 * ((d3 + 2) * d2)));
 
                     // numerical error possible - ok!
                     z2 = Math.Sqrt(((B * B) - (A * d2 * z3)) - B) / A;
@@ -256,11 +257,11 @@ public class Optimize
                 if (Double.IsNaN(z2) || Double.IsInfinity(z2) || Double.IsNegativeInfinity(z2))
                 {
                     // if we had a numerical problem then bisect
-                    z2 = z3 / 2.0;
+                    z2 = z3 / 2;
                 }
 
                 // don't accept too close to limit
-                z2 = Math.Max(Math.Min(z2, INT * z3), (1.0 - INT) * z3);
+                z2 = Math.Max(Math.Min(z2, INT * z3), (1 - INT) * z3);
 
                 // update the step
                 z1 = z1 + z2;
@@ -305,51 +306,51 @@ public class Optimize
             }
 
             // make cubic extrapolation
-            var A1 = 6.0 * (f2 - f3) / z3 + 3.0 * (d2 + d3);
-            var B1 = 3.0 * (f3 - f2) - z3 * (d3 + 2.0 * d2);
+            var A1 = 6 * (f2 - f3) / z3 + 3 * (d2 + d3);
+            var B1 = 3 * (f3 - f2) - z3 * (d3 + 2 * d2);
 
             // num error possible - ok!
             var z21 = -d2 * z3 * z3 / (B1 + Math.Sqrt(B1 * B1 - A1 * d2 * z3 * z3));
 
-            if (z21 < 0.0)
+            if (z21 < 0)
             {
-                z21 = z21 * -1.0;
+                z21 = z21 * -1;
             }
 
             // num prob or wrong sign?
             if (double.IsNaN(z21) || double.IsInfinity(z21) || z21 < 0)
             {
                 // if we have no upper limit
-                if (limit < -0.5)
+                if (limit < -(double)1 / 2)
                 {
                     // then extrapolate the maximum amount
-                    z21 = z1 * (EXT - 1.0);
+                    z21 = z1 * (EXT - 1);
                 }
                 else
                 {
                     // otherwise bisect
-                    z21 = (limit - z1) / 2.0;
+                    z21 = (limit - z1) / 2;
                 }
             }
-            else if (limit > -0.5 && (z21 + z1 > limit))
+            else if (limit > -(double)1 / 2 && (z21 + z1 > limit))
             {
                 // extrapolation beyond limit?
 
                 // set to extrapolation limit
-                z21 = (limit - z1) / 2.0;
+                z21 = (limit - z1) / 2;
             }
-            else if (limit < -0.5 && (z21 + z1 > z1 * EXT))
+            else if (limit < -(double)1 / 2 && (z21 + z1 > z1 * EXT))
             {
-                z21 = z1 * (EXT - 1.0);
+                z21 = z1 * (EXT - 1);
             }
             else if (z21 < -z3 * INT)
             {
                 // too close to limit?
                 z21 = -z3 * INT;
             }
-            else if ((limit > -0.5) && (z21 < (limit - z1) * (1.0 - INT)))
+            else if ((limit > -(double)1 / 2) && (z21 < (limit - z1) * (1 - INT)))
             {
-                z21 = (limit - z1) * (1.0 - INT);
+                z21 = (limit - z1) * (1 - INT);
             }
 
             // set point 3 equal to point 2
@@ -387,7 +388,7 @@ public class Optimize
             var part3 = Multiply(df1, df1);
 
             Copy(s, s, (part1 - part2) / part3);
-            Add(s, df2, -1.0);
+            Add(s, df2, -1);
 
             // swap derivatives
             var tmp = df1;
@@ -398,10 +399,10 @@ public class Optimize
             d2 = Multiply(df1, s);
 
             // new slope must be negative 
-            if (d2 > 0.0)
+            if (d2 > 0)
             {
                 // use steepest direction
-                Copy(s, df1, -1.0);
+                Copy(s, df1, -1);
 
                 d2 = -Multiply(s, s);
             }
@@ -436,11 +437,11 @@ public class Optimize
             df2 = tmp;
 
             // try steepest
-            Copy(s, df1, -1.0);
+            Copy(s, df1, -1);
 
             d1 = -Multiply(s, s);
 
-            z1 = 1.0 / (1.0 - d1);
+            z1 = 1 / (1 - d1);
 
             // this line search failed
             ls_failed = true;

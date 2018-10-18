@@ -8,7 +8,7 @@ namespace DeepLearnUI
     public partial class DeepLearnUI : Form
     {
         int Classification = 0;
-        double[] Probability = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+        double[] Probability = new double[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
         ManagedCNN cnn;
         Bitmap Digit;

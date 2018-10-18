@@ -6,7 +6,7 @@ namespace DeepLearnCS
 {
     public static class ManagedFile
     {
-        public static CultureInfo ci = new CultureInfo("en-us");
+        public static CultureInfo ci = new CultureInfo("en-US");
 
         public static void Load1D(string filename, ManagedArray A, char delimiter = ',')
         {

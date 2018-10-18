@@ -21,7 +21,7 @@ namespace DeepLearnUI
             cnn.FeedForward(Transposed);
 
             digit = 0;
-            var max = 0.0;
+            double max = 0;
 
             for (int y = 0; y < cnn.Output.y; y++)
             {
@@ -93,8 +93,8 @@ namespace DeepLearnUI
                         var startIndex = y * bmpData.Stride + x * Channels;
 
                         var r = (double)Marshal.ReadByte(bmpData.Scan0, startIndex);
-                        var g = 0.0;
-                        var b = 0.0;
+                        double g = 0;
+                        double b = 0;
 
                         // Get start index of the specified pixel
                         if (Depth == 32 || Depth == 24) // For 32 bpp get Red, Green, Blue and Alpha
@@ -108,7 +108,7 @@ namespace DeepLearnUI
                             b = r;
                         }
 
-                        digit[x, y] = (r * 0.299 + g * 0.587 + b * 0.114) / 255.0;
+                        digit[x, y] = (r * 299 + g * 587 + b * 114) / (255000);
                     }
                 }
 

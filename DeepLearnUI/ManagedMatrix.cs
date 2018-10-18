@@ -5,7 +5,7 @@ namespace DeepLearnCS
 {
     public static class ManagedMatrix
     {
-        public static CultureInfo ci = new CultureInfo("en-us");
+        public static CultureInfo ci = new CultureInfo("en-US");
 
         // ------------------------------------------------------------------------------------
         // Print Matrix Elements
@@ -168,7 +168,7 @@ namespace DeepLearnCS
                 {
                     for (int x = 0; x < B.x; x++)
                     {
-                        result[x, y] = 0.0;
+                        result[x, y] = 0;
 
                         for (int k = 0; k < A.x; k++)
                         {
@@ -265,7 +265,7 @@ namespace DeepLearnCS
         }
 
         // Matrix Addition with Scaling
-        public static void Add(ManagedArray A, ManagedArray B, double Scale = 1.0)
+        public static void Add(ManagedArray A, ManagedArray B, double Scale = 1)
         {
             for (int x = 0; x < A.Length(); x++)
             {
@@ -318,7 +318,7 @@ namespace DeepLearnCS
         // Matrix Summation
         public static double Sum(ManagedArray A)
         {
-            var sum = 0.0;
+            double sum = 0;
 
             for (int x = 0; x < A.Length(); x++)
             {
@@ -331,7 +331,7 @@ namespace DeepLearnCS
         // get sum of squares of each element
         public static double SquareSum(ManagedArray A)
         {
-            var sum = 0.0;
+            double sum = 0;
 
             for (int x = 0; x < A.Length(); x++)
             {
@@ -350,7 +350,7 @@ namespace DeepLearnCS
 
                 for (int x = 0; x < src.x; x++)
                 {
-                    var sum = 0.0;
+                    double sum = 0;
 
                     for (int y = 0; y < src.y; y++)
                     {
@@ -366,7 +366,7 @@ namespace DeepLearnCS
 
                 for (int y = 0; y < src.y; y++)
                 {
-                    double sum = 0.0;
+                    double sum = 0;
 
                     for (int x = 0; x < src.x; x++)
                     {
@@ -381,7 +381,7 @@ namespace DeepLearnCS
         // sigmoid function
         public static double Sigmoid(double x)
         {
-            return 1.0 / (1.0 + Math.Exp(-x));
+            return 1 / (1 + Math.Exp(-x));
         }
 
         // Get element per element difference between arrays
@@ -419,7 +419,7 @@ namespace DeepLearnCS
             {
                 var sigmoid = Sigmoid(A[x]);
 
-                result[x] = sigmoid * (1.0 - sigmoid);
+                result[x] = sigmoid * (1 - sigmoid);
             }
 
             return result;
@@ -559,7 +559,7 @@ namespace DeepLearnCS
 
             for (var i = 0; i < A.y; i++)
             {
-                result[i] = 0.0;
+                result[i] = 0;
 
                 for (var j = 0; j < A.x; j++)
                 {
@@ -576,7 +576,7 @@ namespace DeepLearnCS
 
             for (var j = 0; j < A.x; j++)
             {
-                result[j] = 0.0;
+                result[j] = 0;
 
                 for (var i = 0; i < A.y; i++)
                 {
@@ -598,7 +598,7 @@ namespace DeepLearnCS
                 {
                     for (int x = 0; x < dim; x++)
                     {
-                        result[x, y] = (x == y) ? 1.0 : 0.0;
+                        result[x, y] = (x == y) ? 1 : 0;
                     }
                 }
 

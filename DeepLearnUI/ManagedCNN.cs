@@ -7,23 +7,23 @@ namespace DeepLearnCS
     {
         public List<ManagedLayer> Layers = new List<ManagedLayer>();
 
-        public ManagedArray Weights = null;
-        public ManagedArray WeightsDelta = null;
-        public ManagedArray WeightsTransposed = null;
+        public ManagedArray Weights;
+        public ManagedArray WeightsDelta;
+        public ManagedArray WeightsTransposed;
 
-        public ManagedArray FeatureVector = null;
-        public ManagedArray FeatureVectorDelta = null;
+        public ManagedArray FeatureVector;
+        public ManagedArray FeatureVectorDelta;
 
-        public ManagedArray Output = null;
-        public ManagedArray OutputError = null;
-        public ManagedArray OutputDelta = null;
+        public ManagedArray Output;
+        public ManagedArray OutputError;
+        public ManagedArray OutputDelta;
 
         // 1D
-        public ManagedArray Bias = null;
-        public ManagedArray BiasDelta = null;
+        public ManagedArray Bias;
+        public ManagedArray BiasDelta;
 
         // Error
-        public double L = 0.0;
+        public double L;
 
         public List<double> rL = new List<double>();
 
@@ -56,7 +56,7 @@ namespace DeepLearnCS
         {
             for (int x = 0; x < rand.Length(); x++)
             {
-                rand[x] = (random.NextDouble() - 0.5) * 2.0 * Math.Sqrt(6.0 / (fan_in + fan_out));
+                rand[x] = (random.NextDouble() - (double)1 / 2) * 2 * Math.Sqrt((double)6 / (fan_in + fan_out));
             }
         }
 
@@ -150,7 +150,7 @@ namespace DeepLearnCS
                     // !!below can probably be handled by insane matrix operations
                     for (int j = 0; j < Layers[l].OutputMaps; j++) // for each output map
                     {
-                        ManagedOps.Set(z, 0.0);
+                        ManagedOps.Set(z, 0);
 
                         for (int i = 0; i < InputMaps; i++)
                         {
@@ -182,7 +182,7 @@ namespace DeepLearnCS
                     // generate downsampling kernel
                     var scale = (double)(Layers[l].Scale * Layers[l].Scale);
                     var FeatureMap = new ManagedArray(Layers[l].Scale, Layers[l].Scale, false);
-                    ManagedOps.Set(FeatureMap, 1.0 / scale);
+                    ManagedOps.Set(FeatureMap, 1 / scale);
 
                     ManagedOps.Free(Layers[l].Activation);
                     Layers[l].Activation = new ManagedArray(Layers[l - 1].Activation.x / Layers[l].Scale, Layers[l - 1].Activation.y / Layers[l].Scale, batch.z, InputMaps, 1);
@@ -263,11 +263,11 @@ namespace DeepLearnCS
                 OutputError[x] = Output[x] - batch[x];
 
                 // output delta
-                OutputDelta[x] = OutputError[x] * (Output[x] * (1.0 - Output[x]));
+                OutputDelta[x] = OutputError[x] * (Output[x] * (1 - Output[x]));
             }
 
             // Loss Function
-            L = 0.5 * ManagedMatrix.SquareSum(OutputError) / batch.x;
+            L = (double)1 / 2 * ManagedMatrix.SquareSum(OutputError) / batch.x;
 
             ManagedOps.Free(WeightsTransposed, FeatureVectorDelta);
 
@@ -283,7 +283,7 @@ namespace DeepLearnCS
             {
                 for (int x = 0; x < FeatureVectorDelta.Length(); x++)
                 {
-                    FeatureVectorDelta[x] = FeatureVectorDelta[x] * FeatureVector[x] * (1.0 - FeatureVector[x]);
+                    FeatureVectorDelta[x] = FeatureVectorDelta[x] * FeatureVector[x] * (1 - FeatureVector[x]);
                 }
             }
 
@@ -324,7 +324,7 @@ namespace DeepLearnCS
                     var Activation = new ManagedArray(xx, yy, false);
                     var Delta = new ManagedArray(xx, yy, false);
 
-                    var Scale = (1.0 / (Layers[l + 1].Scale * Layers[l + 1].Scale));
+                    var Scale = ((double)1 / (Layers[l + 1].Scale * Layers[l + 1].Scale));
 
                     for (int j = 0; j < Layers[l].Activation.i; j++)
                     {
@@ -358,7 +358,7 @@ namespace DeepLearnCS
 
                     for (int i = 0; i < Layers[l].Activation.i; i++)
                     {
-                        ManagedOps.Set(z, 0.0);
+                        ManagedOps.Set(z, 0);
 
                         for (int j = 0; j < Layers[l + 1].Activation.i; j++)
                         {
@@ -405,7 +405,7 @@ namespace DeepLearnCS
                             ManagedOps.Copy4D3D(atemp, Layers[l - 1].Activation, i);
                             ManagedMatrix.FlipAll(ftemp, atemp);
                             ManagedConvolution.Valid(ftemp, dtemp, FeatureMapDelta);
-                            ManagedMatrix.Multiply(FeatureMapDelta, 1.0 / Layers[n - 1].Activation.z);
+                            ManagedMatrix.Multiply(FeatureMapDelta, (double)1 / Layers[n - 1].Activation.z);
 
                             ManagedOps.Copy2D4DIJ(Layers[l].DeltaFeatureMap, FeatureMapDelta, i, j);
                         }
@@ -426,7 +426,7 @@ namespace DeepLearnCS
             BiasDelta = new ManagedArray(Bias, false);
 
             ManagedMatrix.Multiply(WeightsDelta, OutputDelta, FeatureVectorTransposed);
-            ManagedMatrix.Multiply(WeightsDelta, 1.0 / Layers[n - 1].Activation.z);
+            ManagedMatrix.Multiply(WeightsDelta, (double)1 / Layers[n - 1].Activation.z);
             ManagedMatrix.Mean(BiasDelta, OutputDelta, 0);
 
             ManagedOps.Free(FeatureVectorTransposed);
@@ -454,8 +454,8 @@ namespace DeepLearnCS
 
             for (int x = 0; x < Output.x; x++)
             {
-                var max = 0.0;
-                var cmax = 0.0;
+                double max = 0;
+                double cmax = 0;
                 var index = 0;
                 var cindex = 0;
 
@@ -534,7 +534,7 @@ namespace DeepLearnCS
             {
                 var start = Profiler.now();
 
-                var rLVal = 0.0;
+                double rLVal = 0;
 
                 rL.Clear();
 
@@ -552,7 +552,7 @@ namespace DeepLearnCS
                         rL.Add(L);
                     }
 
-                    rLVal = 0.99 * rL[rL.Count - 1] + 0.01 * L;
+                    rLVal = (double)99 / 100 * rL[rL.Count - 1] + (double)1 / 100 * L;
 
                     rL.Add(rLVal);
                 }

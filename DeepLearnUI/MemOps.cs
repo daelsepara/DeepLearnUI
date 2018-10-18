@@ -12,7 +12,7 @@ namespace DeepLearnCS
             if (initialize)
             {
                 for (int i = 0; i < size; i++)
-                    temp[i] = 0.0;
+                    temp[i] = 0;
             }
 
             return temp;
