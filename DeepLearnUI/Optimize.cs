@@ -70,11 +70,11 @@ public class FuncOutput
 public class Optimize
 {
     // RHO and SIG are the constants in the Wolfe-Powell conditions
-    double RHO = (double)1 / 100;
-    double SIG = (double)1 / 2;
+    double RHO = 0.01;
+    double SIG = 0.5;
 
     // don't reevaluate within 0.1 of the limit of the current bracket
-    double INT = (double)1 / 10;
+    double INT = 0.1;
 
     // extrapolate maximum 3 times the current bracket
     double EXT = 3;
@@ -242,7 +242,7 @@ public class Optimize
                 if (f2 > f1)
                 {
                     // quadratic fit 
-                    z2 = z3 - (((double)1 / 2 * d3 * z3 * z3) / (d3 * z3 + f2 - f3));
+                    z2 = z3 - ((0.5 * d3 * z3 * z3) / (d3 * z3 + f2 - f3));
                 }
                 else
                 {
@@ -321,7 +321,7 @@ public class Optimize
             if (double.IsNaN(z21) || double.IsInfinity(z21) || z21 < 0)
             {
                 // if we have no upper limit
-                if (limit < -(double)1 / 2)
+                if (limit < -0.5)
                 {
                     // then extrapolate the maximum amount
                     z21 = z1 * (EXT - 1);
@@ -332,14 +332,14 @@ public class Optimize
                     z21 = (limit - z1) / 2;
                 }
             }
-            else if (limit > -(double)1 / 2 && (z21 + z1 > limit))
+            else if (limit > -0.5 && (z21 + z1 > limit))
             {
                 // extrapolation beyond limit?
 
                 // set to extrapolation limit
                 z21 = (limit - z1) / 2;
             }
-            else if (limit < -(double)1 / 2 && (z21 + z1 > z1 * EXT))
+            else if (limit < -0.5 && (z21 + z1 > z1 * EXT))
             {
                 z21 = z1 * (EXT - 1);
             }
@@ -348,7 +348,7 @@ public class Optimize
                 // too close to limit?
                 z21 = -z3 * INT;
             }
-            else if ((limit > -(double)1 / 2) && (z21 < (limit - z1) * (1 - INT)))
+            else if ((limit > -0.5) && (z21 < (limit - z1) * (1 - INT)))
             {
                 z21 = (limit - z1) * (1 - INT);
             }

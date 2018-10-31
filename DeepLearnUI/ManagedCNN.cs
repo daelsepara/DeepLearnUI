@@ -56,7 +56,7 @@ namespace DeepLearnCS
         {
             for (int x = 0; x < rand.Length(); x++)
             {
-                rand[x] = (random.NextDouble() - (double)1 / 2) * 2 * Math.Sqrt((double)6 / (fan_in + fan_out));
+                rand[x] = (random.NextDouble() - 0.5) * 2.0 * Math.Sqrt(6.0 / (fan_in + fan_out));
             }
         }
 
@@ -267,7 +267,7 @@ namespace DeepLearnCS
             }
 
             // Loss Function
-            L = (double)1 / 2 * ManagedMatrix.SquareSum(OutputError) / batch.x;
+            L = 0.5 * ManagedMatrix.SquareSum(OutputError) / batch.x;
 
             ManagedOps.Free(WeightsTransposed, FeatureVectorDelta);
 
@@ -324,7 +324,7 @@ namespace DeepLearnCS
                     var Activation = new ManagedArray(xx, yy, false);
                     var Delta = new ManagedArray(xx, yy, false);
 
-                    var Scale = ((double)1 / (Layers[l + 1].Scale * Layers[l + 1].Scale));
+                    var Scale = (1.0 / (Layers[l + 1].Scale * Layers[l + 1].Scale));
 
                     for (int j = 0; j < Layers[l].Activation.i; j++)
                     {
@@ -405,7 +405,7 @@ namespace DeepLearnCS
                             ManagedOps.Copy4D3D(atemp, Layers[l - 1].Activation, i);
                             ManagedMatrix.FlipAll(ftemp, atemp);
                             ManagedConvolution.Valid(ftemp, dtemp, FeatureMapDelta);
-                            ManagedMatrix.Multiply(FeatureMapDelta, (double)1 / Layers[n - 1].Activation.z);
+                            ManagedMatrix.Multiply(FeatureMapDelta, 1.0 / Layers[n - 1].Activation.z);
 
                             ManagedOps.Copy2D4DIJ(Layers[l].DeltaFeatureMap, FeatureMapDelta, i, j);
                         }
@@ -426,7 +426,7 @@ namespace DeepLearnCS
             BiasDelta = new ManagedArray(Bias, false);
 
             ManagedMatrix.Multiply(WeightsDelta, OutputDelta, FeatureVectorTransposed);
-            ManagedMatrix.Multiply(WeightsDelta, (double)1 / Layers[n - 1].Activation.z);
+            ManagedMatrix.Multiply(WeightsDelta, 1.0 / Layers[n - 1].Activation.z);
             ManagedMatrix.Mean(BiasDelta, OutputDelta, 0);
 
             ManagedOps.Free(FeatureVectorTransposed);
@@ -552,7 +552,7 @@ namespace DeepLearnCS
                         rL.Add(L);
                     }
 
-                    rLVal = (double)99 / 100 * rL[rL.Count - 1] + (double)1 / 100 * L;
+                    rLVal = 0.99 * rL[rL.Count - 1] + 0.01 * L;
 
                     rL.Add(rLVal);
                 }

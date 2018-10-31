@@ -29,7 +29,7 @@ namespace DeepLearnCS
             Nodes = 16; // Hidden layer nodes (j)
             Items = 50;  // number of input items
             Categories = 2; // number of output categories (k)
-            Tolerance = (double)1 / 1000;
+            Tolerance = 0.001;
         }
     }
 }

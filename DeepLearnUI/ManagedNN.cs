@@ -122,8 +122,8 @@ namespace DeepLearnCS
             Cost /= training.y;
             L2 /= training.y;
 
-            ManagedMatrix.Multiply(DeltaWji, (double)1 / training.y);
-            ManagedMatrix.Multiply(DeltaWkj, (double)1 / training.y);
+            ManagedMatrix.Multiply(DeltaWji, 1.0 / training.y);
+            ManagedMatrix.Multiply(DeltaWkj, 1.0 / training.y);
 
             // cleanup
             ManagedOps.Free(D2, D3, DZ2, InputBias);
@@ -150,7 +150,7 @@ namespace DeepLearnCS
         {
             for (int x = 0; x < rand.Length(); x++)
             {
-                rand[x] = (random.NextDouble() - (double)1 / 2) * 2;
+                rand[x] = (random.NextDouble() - 0.5) * 2.0;
             }
         }
 
@@ -215,7 +215,7 @@ namespace DeepLearnCS
             return prediction;
         }
 
-        public ManagedIntList Classify(ManagedArray test, NeuralNetworkOptions opts, double threshold = (double)1 / 2)
+        public ManagedIntList Classify(ManagedArray test, NeuralNetworkOptions opts, double threshold = 0.5)
         {
             Forward(test);
 
