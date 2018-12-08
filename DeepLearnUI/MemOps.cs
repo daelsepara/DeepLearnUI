@@ -11,8 +11,8 @@ namespace DeepLearnCS
 
             if (initialize)
             {
-                for (int i = 0; i < size; i++)
-                    temp[i] = 0;
+                for (var i = 0; i < size; i++)
+                    temp[i] = 0.0;
             }
 
             return temp;
@@ -27,7 +27,7 @@ namespace DeepLearnCS
         {
             var temp = (int*)Marshal.AllocHGlobal(size * sizeof(int));
 
-            for (int i = 0; i < size; i++)
+            for (var i = 0; i < size; i++)
                 temp[i] = i;
 
             return temp;
@@ -51,7 +51,6 @@ namespace DeepLearnCS
             }
 
             item = null;
-
         }
     }
 }

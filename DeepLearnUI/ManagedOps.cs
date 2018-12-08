@@ -4,13 +4,13 @@ namespace DeepLearnCS
     {
         public static void MemCopy(ManagedArray dst, int dstoffset, ManagedArray src, int srcoffset, int count)
         {
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
                 dst[dstoffset + i] = src[srcoffset + i];
         }
 
         public static void Set(ManagedArray dst, double value)
         {
-            for (int i = 0; i < dst.Length(); i++)
+            for (var i = 0; i < dst.Length(); i++)
                 dst[i] = value;
         }
 
@@ -19,12 +19,12 @@ namespace DeepLearnCS
         {
             if (miny >= 0 & miny < src.y)
             {
-                for (int y = 0; y < dst.y; y++)
+                for (var y = 0; y < dst.y; y++)
                 {
+                    var srcoffset = (miny + y) * src.x + minx;
                     var dstoffset = y * dst.x;
-                    var srcoffset = (miny + y) * src.x;
 
-                    MemCopy(dst, dstoffset, src, srcoffset + minx, dst.x);
+                    MemCopy(dst, dstoffset, src, srcoffset, dst.x);
                 }
             }
         }
@@ -32,7 +32,7 @@ namespace DeepLearnCS
         // Copy 2D[index_list][y]
         public static void Copy2DX(ManagedArray dst, ManagedArray src, ManagedIntList index_list, int minx)
         {
-            for (int y = 0; y < dst.y; y++)
+            for (var y = 0; y < dst.y; y++)
             {
                 var dstoffset = y * dst.x;
                 var srcoffset = y * src.x;
@@ -48,7 +48,7 @@ namespace DeepLearnCS
         {
             if (miny >= 0 & miny < dst.y & src.y > 0)
             {
-                for (int y = 0; y < src.y; y++)
+                for (var y = 0; y < src.y; y++)
                 {
                     var dstoffset = (miny + y) * dst.x + minx;
                     var srcoffset = y * src.x;
@@ -58,32 +58,20 @@ namespace DeepLearnCS
             }
         }
 
-        // Copy 2D[minx + x][miny + y]
-        public static void Copy2DOffsetReverse(ManagedArray dst, ManagedArray src, int minx, int miny)
-        {
-            if (miny >= 0 & miny < src.y & minx >= 0 & minx < src.x)
-            {
-                for (int y = 0; y < dst.y; y++)
-                {
-                    var srcoffset = (miny + y) * src.x + minx;
-                    var dstoffset = y * dst.x;
-
-                    MemCopy(dst, dstoffset, src, srcoffset, dst.x);
-                }
-            }
-        }
-
         // Copy 3D[minx + x][miny + y][minz + z]
         public static void Copy3D(ManagedArray dst, ManagedArray src, int minx, int miny, int minz)
         {
             if (minx >= 0 & minx < src.x & miny >= 0 & miny < src.y & minz >= 0 & minz < src.z)
             {
-                for (int z = 0; z < dst.z; z++)
+                for (var z = 0; z < dst.z; z++)
                 {
-                    for (int y = 0; y < dst.y; y++)
+                    var offsetd = z * dst.y;
+                    var offsets = (minz + z) * src.y + miny;
+
+                    for (var y = 0; y < dst.y; y++)
                     {
-                        var dstoffset = (z * dst.y + y) * dst.x;
-                        var srcoffset = ((minz + z) * src.y + (miny + y)) * src.x + minx;
+                        var dstoffset = (offsetd + y) * dst.x;
+                        var srcoffset = (offsets + y) * src.x + minx;
 
                         MemCopy(dst, dstoffset, src, srcoffset, dst.x);
                     }
@@ -96,11 +84,11 @@ namespace DeepLearnCS
         {
             if (minz < src.z)
             {
-                for (int z = 0; z < dst.z; z++)
+                for (var z = 0; z < dst.z; z++)
                 {
                     var zz = index_list[minz + z];
 
-                    for (int y = 0; y < dst.y; y++)
+                    for (var y = 0; y < dst.y; y++)
                     {
                         var dstoffset = (z * dst.y + y) * dst.x;
                         var srcoffset = (zz * src.y + y) * src.x;
@@ -122,14 +110,17 @@ namespace DeepLearnCS
         {
             if (dst.z == src.z)
             {
-                for (int z = 0; z < dst.z; z++)
+                for (var z = 0; z < dst.z; z++)
                 {
-                    for (int y = 0; y < dst.y; y++)
-                    {
-                        var dstoffset = (index * dst.z * dst.y + z * dst.y + y) * dst.x;
-                        var srcoffset = (z * src.y + y * step) * src.x;
+                    var offsetd = index * dst.z * dst.y + z * dst.y;
+                    var offsets = z * src.y;
 
-                        for (int x = 0; x < dst.x; x++)
+                    for (var y = 0; y < dst.y; y++)
+                    {
+                        var dstoffset = (offsetd + y) * dst.x;
+                        var srcoffset = (offsets + y * step) * src.x;
+
+                        for (var x = 0; x < dst.x; x++)
                         {
                             dst[dstoffset + x] = src[srcoffset + x * step];
                         }
@@ -143,26 +134,34 @@ namespace DeepLearnCS
         {
             if (dst.z == src.z)
             {
-                for (int z = 0; z < dst.z; z++)
+                for (var z = 0; z < dst.z; z++)
                 {
-                    for (int y = 0; y < dst.y; y++)
+                    var offsets = z * src.y;
+                    var offsetd = index * dst.z * dst.y + z * dst.y;
+
+                    for (var y = 0; y < dst.y; y++)
                     {
-                        var dstoffset = (index * dst.z * dst.y + z * dst.y + y) * dst.x;
+                        var dstoffset = (offsetd + y) * dst.x;
 
-                        for (int x = 0; x < dst.x; x++)
+                        var ys = y * step;
+
+                        for (var x = 0; x < dst.x; x++)
                         {
-                            double maxval = 0;
+                            var maxval = double.MinValue;
+                            var xs = x * step;
 
-                            for (int yy = 0; yy < step; yy++)
+                            for (var yy = 0; yy < step; yy++)
                             {
-                                for (int xx = 0; xx < step; xx++)
+                                var dy = ys + yy;
+                                var vstep = (offsets + dy) * src.x;
+
+                                for (var xx = 0; xx < step; xx++)
                                 {
-                                    var dx = x * step + xx;
-                                    var dy = y * step + yy;
+                                    var dx = xs + xx;
 
                                     if (dx < src.x && dy < src.y)
                                     {
-                                        var val = src[(z * src.y + dy) * src.x + dx];
+                                        var val = src[vstep + dx];
 
                                         if (val > maxval)
                                             maxval = val;
@@ -190,10 +189,11 @@ namespace DeepLearnCS
 
             if (index >= 0 & index < dst.z & src.x == dst.x & src.y == dst.y)
             {
-                for (int y = 0; y < src.y; y++)
+                var dstoffset = index * size2D;
+
+                for (var y = 0; y < src.y; y++)
                 {
                     var srcoffset = y * src.x;
-                    var dstoffset = index * size2D;
 
                     MemCopy(dst, dstoffset + srcoffset, src, srcoffset, src.x);
                 }
@@ -208,10 +208,11 @@ namespace DeepLearnCS
 
             if (index >= 0 & src.x == dst.x & src.y == dst.y)
             {
-                for (int y = 0; y < src.x; y++)
+                var dstoffset = index * size3D + z * size2D;
+
+                for (var y = 0; y < src.x; y++)
                 {
                     var srcoffset = y * src.x;
-                    var dstoffset = index * size3D + z * size2D;
 
                     MemCopy(dst, srcoffset + dstoffset, src, srcoffset, src.x);
                 }
@@ -226,10 +227,11 @@ namespace DeepLearnCS
 
             if (index >= 0 & src.x == dst.x & src.y == dst.y)
             {
-                for (int y = 0; y < dst.y; y++)
+                var srcoffset = index * size3D + z * size2D;
+
+                for (var y = 0; y < dst.y; y++)
                 {
                     var dstoffset = y * dst.x;
-                    var srcoffset = index * size3D + z * size2D;
 
                     MemCopy(dst, dstoffset, src, srcoffset + dstoffset, dst.x);
                 }

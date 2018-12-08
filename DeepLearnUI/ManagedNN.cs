@@ -28,7 +28,7 @@ namespace DeepLearnCS
         {
             // add bias column to input layer
             var InputBias = new ManagedArray(1, training.y);
-            ManagedOps.Set(InputBias, 1);
+            ManagedOps.Set(InputBias, 1.0);
 
             // x = cbind(array(1, c(nrow(training_set), 1)), training_set)
             var x = ManagedMatrix.CBind(InputBias, training);
@@ -47,7 +47,7 @@ namespace DeepLearnCS
 
             // add bias column to hidden layer output
             var HiddenBias = new ManagedArray(1, Zj.y);
-            ManagedOps.Set(HiddenBias, 1);
+            ManagedOps.Set(HiddenBias, 1.0);
 
             // a_2 = cbind(array(1, c(nrow(z_j), 1)), z_j)
             A2 = ManagedMatrix.CBind(HiddenBias, Zj);
@@ -73,7 +73,7 @@ namespace DeepLearnCS
         {
             // add bias column to input layer
             var InputBias = new ManagedArray(1, training.y);
-            ManagedOps.Set(InputBias, 1);
+            ManagedOps.Set(InputBias, 1.0);
 
             // x = cbind(array(1, c(nrow(training_set), 1)), training_set)
             var x = ManagedMatrix.CBind(InputBias, training);
@@ -85,7 +85,7 @@ namespace DeepLearnCS
 
             //  d2 = d3 %*% w_kj[, 2:ncol(w_kj)] * nnet_dsigmoid(z_2)
             var sWkj = new ManagedArray(Wkj.x - 1, Wkj.y);
-            ManagedOps.Copy2DOffsetReverse(sWkj, Wkj, 1, 0);
+            ManagedOps.Copy2D(sWkj, Wkj, 1, 0);
 
             var D2 = new ManagedArray(sWkj.x, D3.y);
             ManagedMatrix.Multiply(D2, D3, sWkj);
@@ -107,10 +107,10 @@ namespace DeepLearnCS
             ManagedMatrix.Multiply(DeltaWkj, tD3, A2);
 
             // cost = sum(-y_matrix * log(y_k) - (1 - y_matrix) * log(1 - y_k))
-            Cost = 0;
-            L2 = 0;
+            Cost = 0.0;
+            L2 = 0.0;
 
-            for (int i = 0; i < Y_output.Length(); i++)
+            for (var i = 0; i < Y_output.Length(); i++)
             {
                 L2 += Math.Sqrt(D3[i] * D3[i]);
                 Cost += (-Y_output[i] * Math.Log(Yk[i]) - (1 - Y_output[i]) * Math.Log(1 - Yk[i]));
@@ -148,7 +148,7 @@ namespace DeepLearnCS
 
         public void Rand(ManagedArray rand, Random random)
         {
-            for (int x = 0; x < rand.Length(); x++)
+            for (var x = 0; x < rand.Length(); x++)
             {
                 rand[x] = (random.NextDouble() - 0.5) * 2.0;
             }
@@ -159,11 +159,11 @@ namespace DeepLearnCS
             var result = new ManagedArray(opts.Categories, opts.Items);
             var eye_matrix = ManagedMatrix.Diag(opts.Categories);
 
-            for (int y = 0; y < opts.Items; y++)
+            for (var y = 0; y < opts.Items; y++)
             {
                 if (opts.Categories > 1)
                 {
-                    for (int x = 0; x < opts.Categories; x++)
+                    for (var x = 0; x < opts.Categories; x++)
                     {
                         result[x, y] = eye_matrix[x, (int)output[y] - 1];
                     }
@@ -185,13 +185,13 @@ namespace DeepLearnCS
 
             var prediction = new ManagedArray(test.y);
 
-            for (int y = 0; y < test.y; y++)
+            for (var y = 0; y < test.y; y++)
             {
                 if (opts.Categories > 1)
                 {
                     double maxval = Double.MinValue;
 
-                    for (int x = 0; x < opts.Categories; x++)
+                    for (var x = 0; x < opts.Categories; x++)
                     {
                         double val = Yk[x, y];
 
@@ -221,16 +221,16 @@ namespace DeepLearnCS
 
             var classification = new ManagedIntList(test.y);
 
-            for (int y = 0; y < test.y; y++)
+            for (var y = 0; y < test.y; y++)
             {
                 if (opts.Categories > 1)
                 {
-                    double maxval = 0;
-                    int maxind = 0;
+                    var maxval = double.MinValue;
+                    var maxind = 0;
 
-                    for (int x = 0; x < opts.Categories; x++)
+                    for (var x = 0; x < opts.Categories; x++)
                     {
-                        double val = Yk[x, y];
+                        var val = Yk[x, y];
 
                         if (val > maxval)
                         {
@@ -276,8 +276,8 @@ namespace DeepLearnCS
                 Rand(Wkj, random);
             }
 
-            Cost = 1;
-            L2 = 1;
+            Cost = 1.0;
+            L2 = 1.0;
 
             Iterations = 0;
         }

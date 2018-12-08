@@ -54,7 +54,7 @@ namespace DeepLearnCS
 
         public void Rand(ManagedArray rand, Random random, int fan_in, int fan_out)
         {
-            for (int x = 0; x < rand.Length(); x++)
+            for (var x = 0; x < rand.Length(); x++)
             {
                 rand[x] = (random.NextDouble() - 0.5) * 2.0 * Math.Sqrt(6.0 / (fan_in + fan_out));
             }
@@ -69,7 +69,7 @@ namespace DeepLearnCS
             var MapSizeX = input.x;
             var MapSizeY = input.y;
 
-            for (int l = 0; l < Layers.Count; l++)
+            for (var l = 0; l < Layers.Count; l++)
             {
                 if (Layers[l].Type == LayerTypes.Subsampling)
                 {
@@ -86,11 +86,11 @@ namespace DeepLearnCS
 
                     var fan_out = Layers[l].OutputMaps * Layers[l].KernelSize * Layers[l].KernelSize;
 
-                    for (int j = 0; j < Layers[l].OutputMaps; j++)
+                    for (var j = 0; j < Layers[l].OutputMaps; j++)
                     {
                         var fan_in = InputMaps * Layers[l].KernelSize * Layers[l].KernelSize;
 
-                        for (int i = 0; i < InputMaps; i++)
+                        for (var i = 0; i < InputMaps; i++)
                         {
                             var rand = new ManagedArray(Layers[l].KernelSize, Layers[l].KernelSize);
                             Rand(rand, random, fan_in, fan_out);
@@ -106,8 +106,8 @@ namespace DeepLearnCS
 
             // 'onum' is the number of labels, that's why it is calculated using size(y, 1). If you have 20 labels so the output of the network will be 20 neurons.
             // 'fvnum' is the number of output neurons at the last layer, the layer just before the output layer.
-            // 'ffb' is the biases of the output neurons.
-            // 'ffW' is the weights between the last layer and the output neurons. Note that the last layer is fully connected to the output layer, that's why the size of the weights is (onum * fvnum)
+            // 'Bias' is the biases of the output neurons.
+            // 'Weights' is the weights between the last layer and the output neurons. Note that the last layer is fully connected to the output layer, that's why the size of the weights is (onum * fvnum)
 
             var fvnum = MapSizeX * MapSizeY * InputMaps;
             var onum = classes;
@@ -129,7 +129,7 @@ namespace DeepLearnCS
 
             ManagedOps.Copy4D3D(Layers[0].Activation, batch, 0);
 
-            for (int l = 1; l < n; l++)
+            for (var l = 1; l < n; l++)
             {
                 if (Layers[l].Type == LayerTypes.Convolution)
                 {
@@ -148,11 +148,11 @@ namespace DeepLearnCS
                     var ztemp = new ManagedArray(zx, zy, zz, false);
 
                     // !!below can probably be handled by insane matrix operations
-                    for (int j = 0; j < Layers[l].OutputMaps; j++) // for each output map
+                    for (var j = 0; j < Layers[l].OutputMaps; j++) // for each output map
                     {
-                        ManagedOps.Set(z, 0);
+                        ManagedOps.Set(z, 0.0);
 
-                        for (int i = 0; i < InputMaps; i++)
+                        for (var i = 0; i < InputMaps; i++)
                         {
                             // copy Layers
                             ManagedOps.Copy4D3D(Activation, Layers[l - 1].Activation, i);
@@ -182,7 +182,7 @@ namespace DeepLearnCS
                     // generate downsampling kernel
                     var scale = (double)(Layers[l].Scale * Layers[l].Scale);
                     var FeatureMap = new ManagedArray(Layers[l].Scale, Layers[l].Scale, false);
-                    ManagedOps.Set(FeatureMap, 1 / scale);
+                    ManagedOps.Set(FeatureMap, 1.0 / scale);
 
                     ManagedOps.Free(Layers[l].Activation);
                     Layers[l].Activation = new ManagedArray(Layers[l - 1].Activation.x / Layers[l].Scale, Layers[l - 1].Activation.y / Layers[l].Scale, batch.z, InputMaps, 1);
@@ -190,7 +190,7 @@ namespace DeepLearnCS
                     var Activation = new ManagedArray(Layers[l - 1].Activation.x, Layers[l - 1].Activation.y, batch.z, false);
                     var z = new ManagedArray(Layers[l - 1].Activation.x - Layers[l].Scale + 1, Layers[l - 1].Activation.y - Layers[l].Scale + 1, batch.z, false);
 
-                    for (int j = 0; j < InputMaps; j++)
+                    for (var j = 0; j < InputMaps; j++)
                     {
                         // copy Layers
                         ManagedOps.Copy4D3D(Activation, Layers[l - 1].Activation, j);
@@ -221,9 +221,9 @@ namespace DeepLearnCS
             var temp2D = new ManagedArray(Layers[n - 1].Activation.x, Layers[n - 1].Activation.y, false);
 
             // concatenate all end layer feature maps into vector
-            for (int j = 0; j < Layers[n - 1].Activation.i; j++)
+            for (var j = 0; j < Layers[n - 1].Activation.i; j++)
             {
-                for (int ii = 0; ii < batch.z; ii++)
+                for (var ii = 0; ii < batch.z; ii++)
                 {
                     // Use Row-major in flattening the feature map
                     ManagedOps.Copy4D2D(temp2D, Layers[n - 1].Activation, ii, j);
@@ -257,7 +257,7 @@ namespace DeepLearnCS
             OutputDelta = new ManagedArray(Output, false);
             OutputError = new ManagedArray(Output, false);
 
-            for (int x = 0; x < Output.Length(); x++)
+            for (var x = 0; x < Output.Length(); x++)
             {
                 // error
                 OutputError[x] = Output[x] - batch[x];
@@ -281,7 +281,7 @@ namespace DeepLearnCS
             // only conv layers has sigm function
             if (Layers[n - 1].Type == LayerTypes.Convolution)
             {
-                for (int x = 0; x < FeatureVectorDelta.Length(); x++)
+                for (var x = 0; x < FeatureVectorDelta.Length(); x++)
                 {
                     FeatureVectorDelta[x] = FeatureVectorDelta[x] * FeatureVector[x] * (1 - FeatureVector[x]);
                 }
@@ -295,11 +295,11 @@ namespace DeepLearnCS
             ManagedOps.Free(Layers[n - 1].Delta);
             Layers[n - 1].Delta = new ManagedArray(Layers[n - 1].Activation, false);
 
-            for (int j = 0; j < Layers[n - 1].Activation.i; j++)
+            for (var j = 0; j < Layers[n - 1].Activation.i; j++)
             {
-                for (int ii = 0; ii < Layers[n - 1].Activation.z; ii++)
+                for (var ii = 0; ii < Layers[n - 1].Activation.z; ii++)
                 {
-                    ManagedOps.Copy2DOffsetReverse(temp1D, FeatureVectorDelta, ii, j * MapSize);
+                    ManagedOps.Copy2D(temp1D, FeatureVectorDelta, ii, j * MapSize);
                     temp1D.Reshape(Layers[n - 1].Activation.x, Layers[n - 1].Activation.y);
                     ManagedMatrix.Transpose(temp2D, temp1D);
                     ManagedOps.Copy2D4D(Layers[n - 1].Delta, temp2D, ii, j);
@@ -309,7 +309,7 @@ namespace DeepLearnCS
 
             ManagedOps.Free(temp1D, temp2D);
 
-            for (int l = n - 2; l >= 0; l--)
+            for (var l = n - 2; l >= 0; l--)
             {
                 if (Layers[l].Type == LayerTypes.Convolution)
                 {
@@ -326,15 +326,15 @@ namespace DeepLearnCS
 
                     var Scale = (1.0 / (Layers[l + 1].Scale * Layers[l + 1].Scale));
 
-                    for (int j = 0; j < Layers[l].Activation.i; j++)
+                    for (var j = 0; j < Layers[l].Activation.i; j++)
                     {
-                        for (int z = 0; z < Layers[n - 1].Activation.z; z++)
+                        for (var z = 0; z < Layers[n - 1].Activation.z; z++)
                         {
                             ManagedOps.Copy4D2D(FeatureMap, Layers[l + 1].Delta, z, j);
                             ManagedMatrix.Expand(FeatureMap, Layers[l + 1].Scale, Layers[l + 1].Scale, FeatureMapExpanded);
                             ManagedOps.Copy4D2D(Activation, Layers[l].Activation, z, j);
 
-                            for (int x = 0; x < Delta.Length(); x++)
+                            for (var x = 0; x < Delta.Length(); x++)
                             {
                                 Delta[x] = Activation[x] * (1 - Activation[x]) * FeatureMapExpanded[x] * Scale;
                             }
@@ -356,11 +356,11 @@ namespace DeepLearnCS
                     var z = new ManagedArray(Layers[l].Activation.x, Layers[l].Activation.y, Layers[n - 1].Activation.z);
                     var ztemp = new ManagedArray(Layers[l].Activation.x, Layers[l].Activation.y, Layers[n - 1].Activation.z, false);
 
-                    for (int i = 0; i < Layers[l].Activation.i; i++)
+                    for (var i = 0; i < Layers[l].Activation.i; i++)
                     {
-                        ManagedOps.Set(z, 0);
+                        ManagedOps.Set(z, 0.0);
 
-                        for (int j = 0; j < Layers[l + 1].Activation.i; j++)
+                        for (var j = 0; j < Layers[l + 1].Activation.i; j++)
                         {
                             ManagedOps.Copy4DIJ2D(FeatureMap, Layers[l + 1].FeatureMap, i, j);
                             ManagedMatrix.Rotate180(rot180, FeatureMap);
@@ -378,7 +378,7 @@ namespace DeepLearnCS
             }
 
             // calc gradients
-            for (int l = 1; l < n; l++)
+            for (var l = 1; l < n; l++)
             {
                 if (Layers[l].Type == LayerTypes.Convolution)
                 {
@@ -396,11 +396,11 @@ namespace DeepLearnCS
                     var atemp = new ManagedArray(Layers[l - 1].Activation.x, Layers[l - 1].Activation.y, Layers[n - 1].Activation.z, false);
                     var ftemp = new ManagedArray(Layers[l - 1].Activation.x, Layers[l - 1].Activation.y, Layers[n - 1].Activation.z, false);
 
-                    for (int j = 0; j < Layers[l].Activation.i; j++)
+                    for (var j = 0; j < Layers[l].Activation.i; j++)
                     {
                         ManagedOps.Copy4D3D(dtemp, Layers[l].Delta, j);
 
-                        for (int i = 0; i < Layers[l - 1].Activation.i; i++)
+                        for (var i = 0; i < Layers[l - 1].Activation.i; i++)
                         {
                             ManagedOps.Copy4D3D(atemp, Layers[l - 1].Activation, i);
                             ManagedMatrix.FlipAll(ftemp, atemp);
@@ -434,7 +434,7 @@ namespace DeepLearnCS
 
         void ApplyGradients(ConvolutionalNeuralNetworkOptions opts)
         {
-            for (int l = 1; l < Layers.Count; l++)
+            for (var l = 1; l < Layers.Count; l++)
             {
                 if (Layers[l].Type == LayerTypes.Convolution)
                 {
@@ -452,14 +452,14 @@ namespace DeepLearnCS
         {
             var errors = 0;
 
-            for (int x = 0; x < Output.x; x++)
+            for (var x = 0; x < Output.x; x++)
             {
                 double max = 0;
                 double cmax = 0;
                 var index = 0;
                 var cindex = 0;
 
-                for (int y = 0; y < Output.y; y++)
+                for (var y = 0; y < Output.y; y++)
                 {
                     var val = Output[x, y];
 
@@ -473,7 +473,7 @@ namespace DeepLearnCS
                 // Save classification
                 classifcation[x] = index;
 
-                for (int cy = 0; cy < Output.y; cy++)
+                for (var cy = 0; cy < Output.y; cy++)
                 {
                     var val = correct[x, cy];
 
@@ -504,7 +504,7 @@ namespace DeepLearnCS
 
             classification = new ManagedArray(1, items, false);
 
-            for (int i = 0; i < items; i += batchsize)
+            for (var i = 0; i < items; i += batchsize)
             {
                 // generate batch
                 ManagedOps.Copy3D(tempx, test_input, 0, 0, i);
@@ -530,15 +530,15 @@ namespace DeepLearnCS
             var temp_input = new ManagedArray(input.x, input.y, opts.BatchSize, false);
             var temp_output = new ManagedArray(opts.BatchSize, output.y, false);
 
-            for (int epoch = 0; epoch < opts.Epochs; epoch++)
+            for (var epoch = 0; epoch < opts.Epochs; epoch++)
             {
                 var start = Profiler.now();
 
-                double rLVal = 0;
+                var rLVal = 0.0;
 
                 rL.Clear();
 
-                for (int i = 0; i < opts.Items; i += opts.BatchSize)
+                for (var i = 0; i < opts.Items; i += opts.BatchSize)
                 {
                     ManagedOps.Copy3D(temp_input, input, 0, 0, i);
                     ManagedOps.Copy2D(temp_output, output, i, 0);
@@ -569,9 +569,9 @@ namespace DeepLearnCS
 
             Layers[layer].FeatureMap = new ManagedArray(sizex, sizey, 1, sizei, sizej);
 
-            for (int i = 0; i < sizei; i++)
+            for (var i = 0; i < sizei; i++)
             {
-                for (int j = 0; j < sizej; j++)
+                for (var j = 0; j < sizej; j++)
                 {
                     var filename = string.Format("{0}/{1}{2,0:D2}{3,0:D2}.txt", BaseDirectory, BaseFileName, i + 1, j + 1);
 
@@ -582,9 +582,9 @@ namespace DeepLearnCS
 
         public void SaveFeatureMap(string BaseDirectory, string BaseFileName, int layer)
         {
-            for (int i = 0; i < Layers[layer].FeatureMap.i; i++)
+            for (var i = 0; i < Layers[layer].FeatureMap.i; i++)
             {
-                for (int j = 0; j < Layers[layer].FeatureMap.j; j++)
+                for (var j = 0; j < Layers[layer].FeatureMap.j; j++)
                 {
                     var filename = string.Format("{0}/{1}{2,0:D2}{3,0:D2}.txt", BaseDirectory, BaseFileName, i + 1, j + 1);
 
@@ -685,7 +685,7 @@ namespace DeepLearnCS
 
         public void Free()
         {
-            for (int i = 0; i < Layers.Count; i++)
+            for (var i = 0; i < Layers.Count; i++)
             {
                 ManagedOps.Free(Layers[i]);
             }

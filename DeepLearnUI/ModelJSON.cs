@@ -212,7 +212,7 @@ namespace DeepLearnCS
         {
             var model = Convert(network);
 
-            string output = JsonConvert.SerializeObject(model);
+            var output = JsonConvert.SerializeObject(model);
 
             return output;
         }
@@ -221,7 +221,7 @@ namespace DeepLearnCS
         {
             var model = Convert(network);
 
-            string output = JsonConvert.SerializeObject(model);
+            var output = JsonConvert.SerializeObject(model);
 
             return output;
         }
@@ -299,7 +299,7 @@ namespace DeepLearnCS
                 {
                     using (var file = new StreamReader(filename))
                     {
-                        string line = "";
+                        var line = "";
 
                         while (!string.IsNullOrEmpty(line = file.ReadLine()))
                         {
@@ -324,7 +324,7 @@ namespace DeepLearnCS
                 {
                     using (var file = new StreamReader(filename))
                     {
-                        string line = "";
+                        var line = "";
 
                         while (!string.IsNullOrEmpty(line = file.ReadLine()))
                         {

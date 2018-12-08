@@ -12,7 +12,7 @@ namespace DeepLearnCS
         // ------------------------------------------------------------------------------------
         public static void PrintList(ManagedIntList input, bool vert = false)
         {
-            for (int x = 0; x < input.x; x++)
+            for (var x = 0; x < input.x; x++)
             {
                 if (!vert)
                 {
@@ -36,11 +36,11 @@ namespace DeepLearnCS
 
         public static void Print2D(ManagedArray input)
         {
-            for (int y = 0; y < input.y; y++)
+            for (var y = 0; y < input.y; y++)
             {
                 Console.Write("{0}: ", y.ToString("D", ci));
 
-                for (int x = 0; x < input.x; x++)
+                for (var x = 0; x < input.x; x++)
                 {
                     if (x > 0)
                     {
@@ -56,15 +56,15 @@ namespace DeepLearnCS
 
         public static void Print3D(ManagedArray input)
         {
-            for (int z = 0; z < input.z; z++)
+            for (var z = 0; z < input.z; z++)
             {
                 Console.Write("[, , {0}]\n", z.ToString("D", ci));
 
-                for (int y = 0; y < input.y; y++)
+                for (var y = 0; y < input.y; y++)
                 {
                     Console.Write("{0}: ", y.ToString("D", ci));
 
-                    for (int x = 0; x < input.x; x++)
+                    for (var x = 0; x < input.x; x++)
                     {
                         if (x > 0)
                         {
@@ -81,15 +81,15 @@ namespace DeepLearnCS
 
         public static void Print4D(ManagedArray input, int i)
         {
-            for (int z = 0; z < input.z; z++)
+            for (var z = 0; z < input.z; z++)
             {
                 Console.Write("[, , {0}]\n", z.ToString("D", ci));
 
-                for (int y = 0; y < input.y; y++)
+                for (var y = 0; y < input.y; y++)
                 {
                     Console.Write("{0}: ", y.ToString("D", ci));
 
-                    for (int x = 0; x < input.x; x++)
+                    for (var x = 0; x < input.x; x++)
                     {
                         if (x > 0)
                         {
@@ -109,11 +109,11 @@ namespace DeepLearnCS
             var size2D = input.x * input.y;
             var srcoffset = (i * input.j + j) * size2D;
 
-            for (int y = 0; y < input.y; y++)
+            for (var y = 0; y < input.y; y++)
             {
                 Console.Write("{0}: ", y.ToString("D", ci));
 
-                for (int x = 0; x < input.x; x++)
+                for (var x = 0; x < input.x; x++)
                 {
                     if (x > 0)
                     {
@@ -136,9 +136,9 @@ namespace DeepLearnCS
         {
             dst.Resize(src.y, src.x, false);
 
-            for (int y = 0; y < src.y; y++)
+            for (var y = 0; y < src.y; y++)
             {
-                for (int x = 0; x < src.x; x++)
+                for (var x = 0; x < src.x; x++)
                 {
                     dst[y, x] = src[x, y];
                 }
@@ -164,13 +164,13 @@ namespace DeepLearnCS
                 // Naive version
                 result.Resize(B.x, A.y, false);
 
-                for (int y = 0; y < A.y; y++)
+                for (var y = 0; y < A.y; y++)
                 {
-                    for (int x = 0; x < B.x; x++)
+                    for (var x = 0; x < B.x; x++)
                     {
                         result[x, y] = 0;
 
-                        for (int k = 0; k < A.x; k++)
+                        for (var k = 0; k < A.x; k++)
                         {
                             result[x, y] = result[x, y] + A[k, y] * B[x, k];
                         }
@@ -189,13 +189,13 @@ namespace DeepLearnCS
 
                 result.Resize(cols, rows, true);
 
-                for (int y = 0; y < rows; y++)
+                for (var y = 0; y < rows; y++)
                 {
                     rhs = 0;
 
-                    for (int x = 0; x < mid; x++)
+                    for (var x = 0; x < mid; x++)
                     {
-                        for (int k = 0; k < cols; k++)
+                        for (var k = 0; k < cols; k++)
                         {
                             result[dest + k] += A[lhs + x] * B[rhs + k];
                         }
@@ -216,7 +216,7 @@ namespace DeepLearnCS
         // Element by element multiplication
         public static void Product(ManagedArray result, ManagedArray A, ManagedArray B)
         {
-            for (int x = 0; x < A.Length(); x++)
+            for (var x = 0; x < A.Length(); x++)
             {
                 result[x] = A[x] * B[x];
             }
@@ -233,7 +233,7 @@ namespace DeepLearnCS
         {
             var result = new ManagedArray(A);
 
-            for (int x = 0; x < A.Length(); x++)
+            for (var x = 0; x < A.Length(); x++)
             {
                 result[x] = A[x] * B[x];
             }
@@ -246,7 +246,7 @@ namespace DeepLearnCS
         {
             var result = new ManagedArray(A);
 
-            for (int x = 0; x < A.Length(); x++)
+            for (var x = 0; x < A.Length(); x++)
             {
                 result[x] = A[x] + B[x];
             }
@@ -267,7 +267,7 @@ namespace DeepLearnCS
         // Matrix Addition with Scaling
         public static void Add(ManagedArray A, ManagedArray B, double Scale = 1)
         {
-            for (int x = 0; x < A.Length(); x++)
+            for (var x = 0; x < A.Length(); x++)
             {
                 A[x] = A[x] + Scale * B[x];
             }
@@ -277,7 +277,7 @@ namespace DeepLearnCS
         {
             var result = new ManagedArray(A);
 
-            for (int x = 0; x < A.Length(); x++)
+            for (var x = 0; x < A.Length(); x++)
             {
                 result[x] = Math.Pow(A[x], power);
             }
@@ -300,7 +300,7 @@ namespace DeepLearnCS
         // Matrix * Constant Multiplication
         public static void Multiply(ManagedArray A, double B)
         {
-            for (int x = 0; x < A.Length(); x++)
+            for (var x = 0; x < A.Length(); x++)
             {
                 A[x] = A[x] * B;
             }
@@ -309,7 +309,7 @@ namespace DeepLearnCS
         // Matrix + Constant Addition
         public static void Add(ManagedArray A, double B)
         {
-            for (int x = 0; x < A.Length(); x++)
+            for (var x = 0; x < A.Length(); x++)
             {
                 A[x] = A[x] + B;
             }
@@ -318,9 +318,9 @@ namespace DeepLearnCS
         // Matrix Summation
         public static double Sum(ManagedArray A)
         {
-            double sum = 0;
+            var sum = 0.0;
 
-            for (int x = 0; x < A.Length(); x++)
+            for (var x = 0; x < A.Length(); x++)
             {
                 sum += A[x];
             }
@@ -331,9 +331,9 @@ namespace DeepLearnCS
         // get sum of squares of each element
         public static double SquareSum(ManagedArray A)
         {
-            double sum = 0;
+            var sum = 0.0;
 
-            for (int x = 0; x < A.Length(); x++)
+            for (var x = 0; x < A.Length(); x++)
             {
                 sum += A[x] * A[x];
             }
@@ -348,11 +348,11 @@ namespace DeepLearnCS
             {
                 dst.Resize(src.x, 1, false);
 
-                for (int x = 0; x < src.x; x++)
+                for (var x = 0; x < src.x; x++)
                 {
-                    double sum = 0;
+                    var sum = 0.0;
 
-                    for (int y = 0; y < src.y; y++)
+                    for (var y = 0; y < src.y; y++)
                     {
                         sum += src[x, y];
                     }
@@ -364,11 +364,11 @@ namespace DeepLearnCS
             {
                 dst.Resize(1, src.y, false);
 
-                for (int y = 0; y < src.y; y++)
+                for (var y = 0; y < src.y; y++)
                 {
-                    double sum = 0;
+                    var sum = 0.0;
 
-                    for (int x = 0; x < src.x; x++)
+                    for (var x = 0; x < src.x; x++)
                     {
                         sum += src[x, y];
                     }
@@ -381,7 +381,7 @@ namespace DeepLearnCS
         // sigmoid function
         public static double Sigmoid(double x)
         {
-            return 1 / (1 + Math.Exp(-x));
+            return 1.0 / (1.0 + Math.Exp(-x));
         }
 
         // Get element per element difference between arrays
@@ -389,7 +389,7 @@ namespace DeepLearnCS
         {
             var result = new ManagedArray(A, false);
 
-            for (int x = 0; x < A.Length(); x++)
+            for (var x = 0; x < A.Length(); x++)
             {
                 result[x] = A[x] - B[x];
             }
@@ -402,7 +402,7 @@ namespace DeepLearnCS
         {
             var result = new ManagedArray(A, false);
 
-            for (int x = 0; x < A.Length(); x++)
+            for (var x = 0; x < A.Length(); x++)
             {
                 result[x] = Sigmoid(A[x]);
             }
@@ -415,11 +415,11 @@ namespace DeepLearnCS
         {
             var result = new ManagedArray(A, false);
 
-            for (int x = 0; x < A.Length(); x++)
+            for (var x = 0; x < A.Length(); x++)
             {
                 var sigmoid = Sigmoid(A[x]);
 
-                result[x] = sigmoid * (1 - sigmoid);
+                result[x] = sigmoid * (1.0 - sigmoid);
             }
 
             return result;
@@ -449,11 +449,11 @@ namespace DeepLearnCS
         {
             dst.Resize(src.x, src.y, src.z, false);
 
-            for (int z = 0; z < src.z; z++)
+            for (var z = 0; z < src.z; z++)
             {
-                for (int y = 0; y < src.y; y++)
+                for (var y = 0; y < src.y; y++)
                 {
-                    for (int x = 0; x < src.x; x++)
+                    for (var x = 0; x < src.x; x++)
                     {
                         switch (FlipDim)
                         {
@@ -484,7 +484,7 @@ namespace DeepLearnCS
 
             ManagedOps.Copy3D(tmp, src, 0, 0, 0);
 
-            for (int FlipDim = 0; FlipDim < 3; FlipDim++)
+            for (var FlipDim = 0; FlipDim < 3; FlipDim++)
             {
                 Flip(dst, tmp, FlipDim);
 
@@ -503,7 +503,7 @@ namespace DeepLearnCS
 
             ManagedOps.Copy2D(tmp, src, 0, 0);
 
-            for (int FlipDim = 0; FlipDim < 2; FlipDim++)
+            for (var FlipDim = 0; FlipDim < 2; FlipDim++)
             {
                 Flip(dst, tmp, FlipDim);
 
@@ -521,13 +521,13 @@ namespace DeepLearnCS
 
             output.Resize(outputx, outputy, false);
 
-            for (int y = 0; y < A.y; y++)
+            for (var y = 0; y < A.y; y++)
             {
-                for (int x = 0; x < A.x; x++)
+                for (var x = 0; x < A.x; x++)
                 {
-                    for (int SZy = 0; SZy < expandy; SZy++)
+                    for (var SZy = 0; SZy < expandy; SZy++)
                     {
-                        for (int SZx = 0; SZx < expandx; SZx++)
+                        for (var SZx = 0; SZx < expandx; SZx++)
                         {
                             output[x * expandx + SZx, y * expandy + SZy] = A[x, y];
                         }
@@ -559,7 +559,7 @@ namespace DeepLearnCS
 
             for (var i = 0; i < A.y; i++)
             {
-                result[i] = 0;
+                result[i] = 0.0;
 
                 for (var j = 0; j < A.x; j++)
                 {
@@ -576,7 +576,7 @@ namespace DeepLearnCS
 
             for (var j = 0; j < A.x; j++)
             {
-                result[j] = 0;
+                result[j] = 0.0;
 
                 for (var i = 0; i < A.y; i++)
                 {
@@ -594,9 +594,9 @@ namespace DeepLearnCS
             {
                 var result = new ManagedArray(dim, dim, false);
 
-                for (int y = 0; y < dim; y++)
+                for (var y = 0; y < dim; y++)
                 {
-                    for (int x = 0; x < dim; x++)
+                    for (var x = 0; x < dim; x++)
                     {
                         result[x, y] = (x == y) ? 1 : 0;
                     }
