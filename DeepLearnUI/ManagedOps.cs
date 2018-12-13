@@ -29,17 +29,26 @@ namespace DeepLearnCS
             }
         }
 
-        // Copy 2D[index_list][y]
-        public static void Copy2DX(ManagedArray dst, ManagedArray src, ManagedIntList index_list, int minx)
+        // Copy 2D[index_list[minx + x]][miny + y]
+        public static void Copy2D(ManagedArray dst, ManagedArray src, int minx, int miny, ManagedIntList index_list)
         {
-            for (var y = 0; y < dst.y; y++)
+            if (miny >= 0 & miny < src.y)
             {
-                var dstoffset = y * dst.x;
-                var srcoffset = y * src.x;
+                for (var y = 0; y < dst.y; y++)
+                {
+                    var sx = (miny + y) * src.x;
+                    var dx = y * dst.x;
 
-                var xx = index_list[minx];
+                    for (var x = 0; x < dst.x; x++)
+                    {
+                        var xx = index_list[minx + x];
 
-                MemCopy(dst, dstoffset, src, srcoffset + xx, dst.x);
+                        var srcoffset = sx + xx;
+                        var dstoffset = dx + x;
+
+                        dst[dstoffset] = src[srcoffset];
+                    }
+                }
             }
         }
 
@@ -79,19 +88,22 @@ namespace DeepLearnCS
             }
         }
 
-        // Copy 3D[x][y][index_list]
-        public static void Copy3DZ(ManagedArray dst, ManagedArray src, ManagedIntList index_list, int minz)
+        // Copy 3D[minx + x][miny + y][index_list[minz + z]]
+        public static void Copy3D(ManagedArray dst, ManagedArray src, int minx, int miny, int minz, ManagedIntList index_list)
         {
-            if (minz < src.z)
+            if (minx >= 0 & minx < src.x & miny >= 0 & miny < src.y & minz >= 0 & minz < src.z)
             {
                 for (var z = 0; z < dst.z; z++)
                 {
                     var zz = index_list[minz + z];
 
+                    var offsets = zz * src.y + miny;
+                    var offsetd = z * dst.y;
+
                     for (var y = 0; y < dst.y; y++)
                     {
-                        var dstoffset = (z * dst.y + y) * dst.x;
-                        var srcoffset = (zz * src.y + y) * src.x;
+                        var dstoffset = (offsetd + y) * dst.x;
+                        var srcoffset = (offsets + y) * src.x + minx;
 
                         MemCopy(dst, dstoffset, src, srcoffset, dst.x);
                     }
@@ -259,6 +271,25 @@ namespace DeepLearnCS
             if (j >= 0 & j < dst.j & i >= 0 & i < dst.i)
             {
                 MemCopy(dst, dstoffset, src, 0, size2D);
+            }
+        }
+
+        // Fisher–Yates shuffle algorithm
+        public static void Shuffle(ManagedIntList index_list)
+        {
+            System.Random random = new System.Random(System.Guid.NewGuid().GetHashCode());
+
+            int n = index_list.Length();
+
+            for (int i = n - 1; i > 1; i--)
+            {
+                int rnd = random.Next(i + 1);
+
+                var value = index_list[rnd];
+
+                index_list[rnd] = index_list[i];
+
+                index_list[i] = value;
             }
         }
 
