@@ -112,7 +112,7 @@ namespace DeepLearnCS
 
             for (var i = 0; i < Y_output.Length(); i++)
             {
-                L2 += Math.Sqrt(D3[i] * D3[i]);
+                L2 += (D3[i] * D3[i]);
                 Cost += (-Y_output[i] * Math.Log(Yk[i]) - (1 - Y_output[i]) * Math.Log(1 - Yk[i]));
             }
 
