@@ -580,7 +580,7 @@ namespace DeepLearnCS
 
                 for (var i = 0; i < A.y; i++)
                 {
-                    result[i] += A[j, i];
+                    result[j] += A[j, i];
                 }
             }
 
