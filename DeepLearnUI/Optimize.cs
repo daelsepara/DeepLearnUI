@@ -198,8 +198,10 @@ public class Optimize
         Add(X, s, z1);
 
         // evaluate cost - and gradient function with new params
-        var f2 = F(X).Error;
-        var df2 = F(X).Gradient;
+        var eval = F(X);
+        
+        var f2 = eval.Error;
+        var df2 = eval.Gradient;
 
         Evaluations++;
 
@@ -226,8 +228,6 @@ public class Optimize
         // initialize quantities
         var success = false;
         var limit = -1.0;
-
-        FuncOutput eval;
 
         while (true)
         {
@@ -379,8 +379,7 @@ public class Optimize
         }
 
         // if line searched succeeded 
-        if (success)
-        {
+        if (success) {
             f1 = f2;
 
             // Polack-Ribiere direction
